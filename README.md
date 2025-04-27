@@ -31,6 +31,10 @@ NEXTAUTH_SECRET=awfjwakljfklawjf2iofj23afo
 ```
 
 ```
+npx prisma migrate dev
+```
+
+```
 npm run build
 ```
 

@@ -33,12 +33,8 @@ export function TugasTable({ data, searchParams }: TugasTableProps) {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const [pageIndex, setPageIndex] = useQueryState("page", {
-    defaultValue: searchParams.judul,
-  });
-  const [pageSize, setPageSize] = useQueryState("limit", {
-    defaultValue: searchParams.limit,
-  });
+  const [pageIndex, setPageIndex] = useQueryState("page");
+  const [pageSize, setPageSize] = useQueryState("limit");
 
   const columns = React.useMemo(() => getTugasTableColumns(), []);
 
