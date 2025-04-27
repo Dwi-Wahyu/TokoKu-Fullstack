@@ -6,7 +6,7 @@
 - Shadcn UI
 - Next Auth v5 Credentials Provider
 - Client Side Shadcn Datatable (using Tanstack)
-- Server Side Shadcn Datatable (using Tanstack) [Soon]
+- Server Side Shadcn Datatable (using Tanstack) [On Progress]
 
 ### Step By Step
 
