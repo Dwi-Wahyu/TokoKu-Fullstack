@@ -8,7 +8,7 @@
 - Client Side Shadcn Datatable (using Tanstack)
 - Server Side Shadcn Datatable (using Tanstack) [On Progress]
 
-<!-- ![Deskripsi Gambar](URL_atau_Path_Gambar) -->
+![Dashboard View](./dashboard.png)
 
 ### Step By Step
 
