@@ -1,5 +1,7 @@
 # Next JS 15 Fullstack StarterPack
 
+![Dashboard View](./dashboard.png)
+
 ### Include :
 
 - Prisma ORM
@@ -7,8 +9,6 @@
 - Next Auth v5 Credentials Provider
 - Client Side Shadcn Datatable (using Tanstack)
 - Server Side Shadcn Datatable (using Tanstack) [On Progress]
-
-![Dashboard View](./dashboard.png)
 
 ### Step By Step
 
