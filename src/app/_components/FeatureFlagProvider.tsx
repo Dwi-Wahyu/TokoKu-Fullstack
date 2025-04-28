@@ -9,7 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { type FlagConfig, flagConfig } from "@/config/datatableFlag";
+import { type FlagConfig, flagConfig } from "@/config/datatable-flag";
 
 type FilterFlag = FlagConfig["featureFlags"][number]["value"];
 

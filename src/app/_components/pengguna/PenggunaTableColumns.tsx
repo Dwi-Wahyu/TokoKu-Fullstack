@@ -1,4 +1,6 @@
-import { TabelTugasType } from "@/common/schema/tugas/TabelTugasType";
+import moment from "moment";
+
+import { TabelTugasType } from "@/schema/tugas/TabelTugasType";
 import { ColumnDef } from "@tanstack/react-table";
 
 import {
@@ -14,18 +16,31 @@ import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
-export function getTugasTableColumns() {
-  const tugasTableColumns: ColumnDef<TabelTugasType>[] = [
+export function getPenggunaTableColumns() {
+  const penggunaTableColumns: ColumnDef<TabelTugasType>[] = [
     {
       accessorKey: "judul",
       header: "Judul",
+      enableColumnFilter: true,
+      enableGlobalFilter: true,
     },
     {
       accessorKey: "deskripsi",
       header: "Deskripsi",
       cell: ({ getValue }) => (
-        <div className="max-w-sm truncate">{getValue() as string}</div>
+        <div className="max-w-xs truncate">{getValue() as string}</div>
       ),
+    },
+    {
+      accessorKey: "deadline",
+      header: "Deadline",
+      cell: ({ row }) => {
+        const dateValue: Date | null = row.getValue("deadline");
+
+        if (!dateValue) return "-";
+
+        return moment(dateValue).format("YYYY-MM-DD | hh:mm");
+      },
     },
     {
       id: "aksi",
@@ -53,5 +68,5 @@ export function getTugasTableColumns() {
     },
   ];
 
-  return tugasTableColumns;
+  return penggunaTableColumns;
 }

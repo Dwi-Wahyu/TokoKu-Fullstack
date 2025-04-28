@@ -1,6 +1,6 @@
 "use client";
 
-import { loginSchema, TLoginSchema } from "@/common/schema/LoginSchema";
+import { loginSchema, TLoginSchema } from "@/schema/LoginSchema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { BookOpenCheck, Loader2 } from "lucide-react";

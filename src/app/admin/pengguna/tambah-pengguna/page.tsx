@@ -4,8 +4,8 @@ import { tambahPengguna } from "@/app/_lib/actions/penggunaActions";
 import {
   tambahPenggunaSchema,
   TTambahPenggunaSchema,
-} from "@/common/schema/pengguna/TambahPenggunaSchema";
-import { ResponseType } from "@/common/types/ResponType";
+} from "@/schema/pengguna/TambahPenggunaSchema";
+import { ResponseType } from "@/types/respon-type";
 import { Button } from "@/components/ui/button";
 import {
   Card,

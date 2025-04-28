@@ -3,11 +3,11 @@
 import {
   editPenggunaSchema,
   TEditPenggunaSchema,
-} from "@/common/schema/pengguna/EditPenggunaSchema";
+} from "@/schema/pengguna/EditPenggunaSchema";
 import {
   tambahPenggunaSchema,
   TTambahPenggunaSchema,
-} from "@/common/schema/pengguna/TambahPenggunaSchema";
+} from "@/schema/pengguna/TambahPenggunaSchema";
 import { prisma } from "@/lib/prisma";
 import {
   handlePrismaUniqueViolation,

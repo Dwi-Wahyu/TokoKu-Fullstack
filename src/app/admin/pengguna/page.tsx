@@ -1,4 +1,3 @@
-import { getDataTabelPengguna } from "@/app/_lib/queries/penggunaQueries";
 import { Suspense } from "react";
 import { PenggunaTable } from "@/app/_components/pengguna/PenggunaTable";
 import { SearchParams } from "nuqs/server";
@@ -6,13 +5,18 @@ import { DatatableSkeleton } from "@/components/datatable/datatable-skeleton";
 import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
 import Link from "next/link";
+import { getPengguna } from "@/app/_lib/queries/penggunaQueries";
+import { penggunaSearchParams } from "@/app/_lib/validations/penggunaSearchParams";
 
 interface IndexPageProps {
   searchParams: Promise<SearchParams>;
 }
 
 export default async function DaftarPengguna(props: IndexPageProps) {
-  const promises = getDataTabelPengguna();
+  const searchParams = await props.searchParams;
+  const search = penggunaSearchParams.parse(searchParams);
+
+  const promises = Promise.all([getPengguna(search)]);
 
   return (
     <div className="">

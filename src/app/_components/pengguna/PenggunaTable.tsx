@@ -1,15 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import { getDataTabelPengguna } from "../../_lib/queries/penggunaQueries";
-import { ClientSideDataTable } from "@/components/datatable/clientside-datatable";
 import { ColumnDef } from "@tanstack/react-table";
-import { TTabelPenggunaSchema } from "@/common/schema/pengguna/TabelPenggunaSchema";
+import { TTabelPenggunaSchema } from "@/schema/pengguna/TabelPenggunaSchema";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Loader2, MoreHorizontal } from "lucide-react";
+import {
+  FilterX,
+  Loader2,
+  MoreHorizontal,
+  SquareUserRound,
+} from "lucide-react";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
@@ -24,21 +28,47 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { deletePengguna } from "../../_lib/actions/penggunaActions";
 import { toast } from "sonner";
+import { useDataTable } from "@/hooks/use-data-table";
+import { getPengguna } from "@/app/_lib/queries/penggunaQueries";
+import { DataTable } from "@/components/datatable/data-table";
+import { DataTableAdvancedToolbar } from "@/components/datatable/data-table-advanced-toolbar";
+import { Input } from "@/components/ui/input";
+import { useQueryState } from "nuqs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-export function PenggunaTable({
-  promises,
-}: {
-  promises: Promise<Awaited<ReturnType<typeof getDataTabelPengguna>>>;
-}) {
-  const data = React.use(promises);
+interface PenggunaTableProps {
+  promises: Promise<[Awaited<ReturnType<typeof getPengguna>>]>;
+}
+
+export function PenggunaTable({ promises }: PenggunaTableProps) {
+  const [{ data, pageCount }] = React.use(promises);
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedId, setSelectedId] = useState("");
+
+  const [nama, setNama] = useQueryState("nama", {
+    defaultValue: "",
+    shallow: false,
+  });
+  const [peran, setPeran] = useQueryState("peran", {
+    defaultValue: "",
+    shallow: false,
+  });
+
+  function handleResetFilter() {
+    setNama("");
+    setPeran("");
+  }
 
   function toggleOpenDialog(id: string) {
     setSelectedId(id);
@@ -89,6 +119,20 @@ export function PenggunaTable({
     },
   ];
 
+  const { table } = useDataTable({
+    data,
+    columns,
+    pageCount: pageCount,
+    shallow: false,
+    clearOnDefault: true,
+    initialState: {
+      pagination: {
+        pageSize: 5,
+        pageIndex: 0,
+      },
+    },
+  });
+
   async function handleDelete() {
     setLoading(true);
     const request = await deletePengguna(selectedId);
@@ -123,11 +167,34 @@ export function PenggunaTable({
         </AlertDialogContent>
       </AlertDialog>
 
-      <ClientSideDataTable
-        columns={columns}
-        data={data}
-        validColumnFilters={["nama"]}
-      />
+      <DataTable table={table}>
+        <DataTableAdvancedToolbar table={table}>
+          <div className="flex gap-2 items-center">
+            <Input
+              placeholder="Cari nama . . ."
+              size={40}
+              value={nama}
+              onChange={(e) => setNama(e.target.value)}
+            />
+          </div>
+
+          <Select value={peran} onValueChange={(value) => setPeran(value)}>
+            <SelectTrigger>
+              <SquareUserRound />
+              <SelectValue placeholder="Peran Pengguna" />
+            </SelectTrigger>
+            <SelectContent side="top">
+              <SelectItem value="praktikan">Praktikan</SelectItem>
+              <SelectItem value="asisten">Asisten</SelectItem>
+            </SelectContent>
+          </Select>
+
+          <Button onClick={handleResetFilter} variant={"outline"}>
+            <FilterX />
+            Reset Filter
+          </Button>
+        </DataTableAdvancedToolbar>
+      </DataTable>
     </div>
   );
 }
