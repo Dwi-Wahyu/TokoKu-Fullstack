@@ -66,7 +66,7 @@ export function TugasTable({ promises }: TugasTableProps) {
               onChange={(e) => setJudul(e.target.value)}
             />
 
-            <DateFilter key="deadline" title="Filter Deadline" />
+            {/* <DateFilter queryKey="deadline" title="Filter Deadline" /> */}
           </div>
         </DataTableAdvancedToolbar>
       </DataTable>

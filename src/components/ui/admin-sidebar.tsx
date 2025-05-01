@@ -37,11 +37,6 @@ const data = {
           url: "dashboard",
           icon: LayoutDashboard,
         },
-        {
-          title: "Tugas",
-          url: "tugas",
-          icon: BookCheck,
-        },
       ],
     },
     {
@@ -69,7 +64,9 @@ const data = {
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AdminSidebar({
+  ...props
+}: React.ComponentProps<typeof Sidebar>) {
   const [activeLink, setActiveLink] = React.useState("/admin/dashboard");
   const { data: session, status } = useSession();
 
@@ -90,7 +87,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="flex items-center justify-center mt-2 gap-2">
           <BookOpenCheck />
-          <h1 className="font-bold text-lg mb-1">Asistensi Manager</h1>
+          <h1 className="font-bold text-lg mb-1">StarterPack Nextjs</h1>
         </div>
       </SidebarHeader>
       <SidebarContent>

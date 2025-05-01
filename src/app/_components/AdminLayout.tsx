@@ -20,6 +20,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Fragment } from "react";
 import Link from "next/link";
+import { AdminSidebar } from "@/components/ui/admin-sidebar";
 
 function capitalize(str: string): string {
   if (str.length > 35) {
@@ -48,7 +49,8 @@ export default function ClientAdminLayout({
   return (
     <div>
       <SidebarProvider>
-        <AppSidebar />
+        {/* <AppSidebar /> */}
+        <AdminSidebar />
         <SidebarInset>
           <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b px-4">
             <div className="flex items-center">
