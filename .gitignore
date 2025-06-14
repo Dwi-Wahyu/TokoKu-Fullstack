@@ -10,10 +10,17 @@
 !.yarn/releases
 !.yarn/versions
 
-generated_logbook/
-public/image/signature/
-public/image/profile-picture/
-public/lampiran/
+generated_logbook/*
+!generated_logbook/.gitkeep
+
+public/image/signature/*
+!public/image/signature/.gitkeep
+
+public/image/profile-picture/*
+!public/image/profile-picture/.gitkeep
+
+public/lampiran/*
+!public/lampiran/.gitkeep
 
 # testing
 /coverage
