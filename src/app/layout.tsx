@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 
 import NextTopLoader from "nextjs-toploader";
@@ -8,7 +8,10 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SessionProvider } from "next-auth/react";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Sistem Asistensi",
@@ -22,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className}  antialiased`}>
+      <body className={`${poppins.className}  antialiased`}>
         <NextTopLoader
           color="#2299DD"
           initialPosition={0.08}
@@ -45,7 +48,7 @@ export default function RootLayout({
           <SessionProvider>{children}</SessionProvider>
         </ThemeProvider>
 
-        <Toaster richColors closeButton />
+        <Toaster closeButton />
       </body>
     </html>
   );

@@ -1,51 +1,106 @@
+import "server-only";
+
 import { TSearchParamsSchema } from "@/schema/SearchParamsSchema";
 import { TTambahPenggunaSchema } from "@/schema/pengguna/TambahPenggunaSchema";
 import { prisma } from "@/lib/prisma";
 import { log } from "console";
 import { revalidatePath } from "next/cache";
-import "server-only";
 import { TPenggunaSearchParams } from "../validations/penggunaSearchParams";
-import { PeranPengguna, Prisma } from "@/generated/prisma";
-
-const PERAN_MAPPING = {
-  [PeranPengguna.praktikan]: "praktikan",
-  [PeranPengguna.asisten]: "asisten",
-  [PeranPengguna.admin]: "admin",
-};
+import { Prisma } from "@/generated/prisma";
+import { TGantiProfilSchema } from "@/schema/GantiProfilSchema";
 
 export async function getPengguna(input: TPenggunaSearchParams) {
   type WhereClause = Prisma.penggunaWhereInput;
-  let whereClause: WhereClause = {
-    nama: {
-      contains: input.nama,
-    },
-  };
+  let whereClause: WhereClause;
 
-  if (input.peran) {
+  if (input.peran === "DOSEN") {
     whereClause = {
       nama: {
         contains: input.nama,
       },
-      peran: input.peran,
+      username: {
+        contains: input.username,
+      },
+    };
+  } else {
+    whereClause = {
+      nama: {
+        contains: input.nama,
+      },
+      profil: {
+        angkatan: {
+          contains: input.angkatan,
+        },
+      },
     };
   }
 
   const filtered = await prisma.pengguna.count({
-    where: whereClause,
+    where: { ...whereClause, peran: input.peran },
   });
   const data = await prisma.pengguna.findMany({
     take: input.perPage,
     skip: (input.page - 1) * input.perPage,
-    where: whereClause,
+    where: { ...whereClause, peran: input.peran },
     select: {
       id: true,
       nama: true,
       username: true,
       peran: true,
+      profil: {
+        select: {
+          angkatan: true,
+        },
+      },
+      bimbingan: {
+        select: {
+          nama: true,
+        },
+      },
     },
   });
 
   const pageCount = Math.ceil(filtered / input.perPage);
 
   return { data, pageCount, filtered };
+}
+
+export async function getProfilPengguna(id: string) {
+  const profil = await prisma.pengguna.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      nama: true,
+      username: true,
+      peran: true,
+      avatar: true,
+      signature: true,
+      pembimbing: {
+        select: { nama: true, avatar: true },
+      },
+      promotor: {
+        select: { nama: true, avatar: true },
+      },
+      koPromotor: {
+        select: { nama: true, avatar: true },
+      },
+      profil: {
+        select: {
+          judulDisertasi: true,
+          alamat: true,
+          alamatKeluarga: true,
+          angkatan: true,
+          email: true,
+          mulaiMasukPendidikan: true,
+          nomorTelpon: true,
+          pekerjaan: true,
+          tahunLulus: true,
+          tempatTanggalLahir: true,
+        },
+      },
+    },
+  });
+
+  return profil;
 }

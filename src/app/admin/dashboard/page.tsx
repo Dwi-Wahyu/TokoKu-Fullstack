@@ -1,39 +1,31 @@
-"use client";
+import DashboardInfo from "@/app/_components/DashboardInfo";
+import NotifikasiCard from "@/app/_components/NotifikasiCard";
+import { findAllNotifikasi } from "@/app/_lib/actions/notifikasiAction";
+import { auth } from "@/config/auth";
 
-import { AreaChartComponent } from "@/components/charts/area-chart";
-import BarChartComponent from "@/components/charts/bar-chart";
-import DashboardCard from "@/components/dashboard-card";
-import { NotebookText, Users, Users2, UserSearch } from "lucide-react";
-import { useSession } from "next-auth/react";
-
-export default function Dashboard() {
-  const session = useSession();
+export default async function Dashboard() {
+  const session = await auth();
 
   if (!session) {
     return <h1>Unauthorized</h1>;
   }
 
+  const allNotifikasi = await findAllNotifikasi({
+    penggunaId: session.user.id,
+  });
+
   return (
     <div>
       <div className="mb-5">
         <h1 className="font-bold text-xl">
-          Selamat Datang, {session.data?.user.nama}
+          Selamat Datang, {session?.user.nama}
         </h1>
       </div>
-      <div className="mb-5 grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-        <DashboardCard icon={Users} title="Praktikan" value={120} />
 
-        <DashboardCard icon={Users2} title="Asisten" value={43} />
+      <DashboardInfo peran={session.user.peran} id={session.user.id} />
 
-        <DashboardCard icon={NotebookText} title="Tugas" value={5} />
-
-        <DashboardCard icon={UserSearch} title="Pengunjung" value={54} />
-      </div>
-      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-        <BarChartComponent />
-
-        <AreaChartComponent />
-      </div>
+      {/* todo: create skeleton for notifikasi card */}
+      <NotifikasiCard allNotifikasi={allNotifikasi} />
     </div>
   );
 }

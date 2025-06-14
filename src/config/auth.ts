@@ -32,7 +32,7 @@ export const authConfig: NextAuthConfig = {
               id: user.id,
               username: user.username,
               nama: user.nama,
-              avatar: null,
+              avatar: user.avatar,
               peran: user.peran,
             }
           : null;
@@ -40,7 +40,8 @@ export const authConfig: NextAuthConfig = {
     }),
   ],
   pages: {
-    signIn: "/masuk",
+    signIn: "/",
+    signOut: "/logout",
   },
   callbacks: {
     async session({ session, token }) {
@@ -48,6 +49,8 @@ export const authConfig: NextAuthConfig = {
         session.user.id = token.id as string;
         session.user.username = token.username as string;
         session.user.nama = token.nama as string;
+        session.user.peran = token.peran as string;
+        session.user.avatar = token.avatar as string;
       }
       return session;
     },
@@ -57,6 +60,7 @@ export const authConfig: NextAuthConfig = {
         token.username = user.username;
         token.nama = user.nama;
         token.peran = user.peran;
+        token.avatar = user.avatar;
       }
       return token;
     },

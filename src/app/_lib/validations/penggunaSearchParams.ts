@@ -9,7 +9,9 @@ export const penggunaSearchParams = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   perPage: parseAsInteger.withDefault(5),
   nama: parseAsString.withDefault(""),
-  peran: parseAsStringEnum(["asisten", "praktikan", "admin"]).withOptions({
+  username: parseAsString.withDefault(""),
+  angkatan: parseAsString.withDefault(""),
+  peran: parseAsStringEnum(["MAHASISWA", "DOSEN"]).withOptions({
     clearOnDefault: true,
   }),
   filterFlag: parseAsString.withDefault(""),
@@ -19,6 +21,8 @@ export type TPenggunaSearchParams = {
   page: number;
   perPage: number;
   nama: string;
-  peran: "asisten" | "praktikan" | "admin" | null;
+  username: string;
+  angkatan: string;
+  peran: "MAHASISWA" | "DOSEN" | "ADMIN";
   filterFlag: string;
 };

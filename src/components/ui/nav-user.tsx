@@ -1,6 +1,11 @@
 "use client";
 
-import { LogOutIcon, MoreVerticalIcon, UserCircleIcon } from "lucide-react";
+import {
+  LogOutIcon,
+  MoreVerticalIcon,
+  UserCircleIcon,
+  UserRoundPen,
+} from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -19,6 +24,9 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { signOut } from "next-auth/react";
+import { getNameInitials } from "@/service/getNameInitials";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export function NavUser({
   user,
@@ -31,11 +39,14 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const router = useRouter();
 
   function handleLogout() {
     signOut({
-      redirectTo: "/masuk",
+      redirect: false,
     });
+    router.push("/");
+    router.refresh();
   }
 
   return (
@@ -47,9 +58,14 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg grayscale">
-                {/* <AvatarImage src={user.image} alt={user.nama} /> */}
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage
+                  src={`/image/profile-picture/${user.avatar}`}
+                  alt="foto-profil"
+                />
+                <AvatarFallback className="rounded-lg">
+                  {getNameInitials(user.nama)}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.nama}</span>
@@ -80,14 +96,14 @@ export function NavUser({
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <UserCircleIcon />
-                Account
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+
+            <DropdownMenuItem asChild>
+              <Link href="/admin/profil">
+                <UserRoundPen />
+                Profil
+              </Link>
+            </DropdownMenuItem>
+
             <DropdownMenuItem onClick={handleLogout}>
               <LogOutIcon />
               Log out

@@ -123,17 +123,84 @@ exports.Prisma.PenggunaScalarFieldEnum = {
   username: 'username',
   password: 'password',
   peran: 'peran',
+  avatar: 'avatar',
+  signature: 'signature',
+  pembimbingId: 'pembimbingId',
+  koPromotorId: 'koPromotorId',
+  promotorId: 'promotorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.TugasScalarFieldEnum = {
+exports.Prisma.KegiatanScalarFieldEnum = {
   id: 'id',
   judul: 'judul',
-  deskripsi: 'deskripsi',
-  deadline: 'deadline',
+  lokasi: 'lokasi',
+  tanggalMulai: 'tanggalMulai',
+  tanggalSelesai: 'tanggalSelesai',
+  catatan: 'catatan',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  pengajuId: 'pengajuId',
+  mata_kuliahId: 'mata_kuliahId'
+};
+
+exports.Prisma.LogbookScalarFieldEnum = {
+  id: 'id',
+  path: 'path',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  penggunaId: 'penggunaId'
+};
+
+exports.Prisma.ProfilScalarFieldEnum = {
+  id: 'id',
+  judulDisertasi: 'judulDisertasi',
+  angkatan: 'angkatan',
+  tempatTanggalLahir: 'tempatTanggalLahir',
+  alamat: 'alamat',
+  alamatKeluarga: 'alamatKeluarga',
+  tahunLulus: 'tahunLulus',
+  mulaiMasukPendidikan: 'mulaiMasukPendidikan',
+  pekerjaan: 'pekerjaan',
+  nomorTelpon: 'nomorTelpon',
+  email: 'email',
+  penggunaId: 'penggunaId'
+};
+
+exports.Prisma.Permohonan_bimbinganScalarFieldEnum = {
+  id: 'id',
+  statusPermohonan: 'statusPermohonan',
+  kalimatPermohonan: 'kalimatPermohonan',
+  alasanDitolak: 'alasanDitolak',
+  mahasiswaId: 'mahasiswaId',
+  dosenId: 'dosenId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.Mata_kuliahScalarFieldEnum = {
+  id: 'id',
+  judul: 'judul',
+  semester: 'semester',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Lampiran_kegiatanScalarFieldEnum = {
+  id: 'id',
+  path: 'path',
+  ext: 'ext',
+  kegiatanId: 'kegiatanId'
+};
+
+exports.Prisma.NotifikasiScalarFieldEnum = {
+  id: 'id',
+  judul: 'judul',
+  pesan: 'pesan',
+  dibaca: 'dibaca',
+  createdAt: 'createdAt',
+  penggunaId: 'penggunaId'
 };
 
 exports.Prisma.SortOrder = {
@@ -141,26 +208,96 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.penggunaOrderByRelevanceFieldEnum = {
   id: 'id',
   nama: 'nama',
   username: 'username',
-  password: 'password'
+  password: 'password',
+  avatar: 'avatar',
+  signature: 'signature',
+  pembimbingId: 'pembimbingId',
+  koPromotorId: 'koPromotorId',
+  promotorId: 'promotorId'
 };
 
-exports.Prisma.tugasOrderByRelevanceFieldEnum = {
+exports.Prisma.kegiatanOrderByRelevanceFieldEnum = {
   judul: 'judul',
-  deskripsi: 'deskripsi'
+  lokasi: 'lokasi',
+  catatan: 'catatan',
+  pengajuId: 'pengajuId'
 };
-exports.PeranPengguna = exports.$Enums.PeranPengguna = {
-  praktikan: 'praktikan',
-  asisten: 'asisten',
-  admin: 'admin'
+
+exports.Prisma.logbookOrderByRelevanceFieldEnum = {
+  path: 'path',
+  penggunaId: 'penggunaId'
+};
+
+exports.Prisma.profilOrderByRelevanceFieldEnum = {
+  judulDisertasi: 'judulDisertasi',
+  angkatan: 'angkatan',
+  tempatTanggalLahir: 'tempatTanggalLahir',
+  alamat: 'alamat',
+  alamatKeluarga: 'alamatKeluarga',
+  tahunLulus: 'tahunLulus',
+  pekerjaan: 'pekerjaan',
+  nomorTelpon: 'nomorTelpon',
+  email: 'email',
+  penggunaId: 'penggunaId'
+};
+
+exports.Prisma.permohonan_bimbinganOrderByRelevanceFieldEnum = {
+  kalimatPermohonan: 'kalimatPermohonan',
+  alasanDitolak: 'alasanDitolak',
+  mahasiswaId: 'mahasiswaId',
+  dosenId: 'dosenId'
+};
+
+exports.Prisma.mata_kuliahOrderByRelevanceFieldEnum = {
+  judul: 'judul'
+};
+
+exports.Prisma.lampiran_kegiatanOrderByRelevanceFieldEnum = {
+  path: 'path',
+  ext: 'ext'
+};
+
+exports.Prisma.notifikasiOrderByRelevanceFieldEnum = {
+  judul: 'judul',
+  pesan: 'pesan',
+  penggunaId: 'penggunaId'
+};
+exports.pengguna_peran = exports.$Enums.pengguna_peran = {
+  ADMIN: 'ADMIN',
+  MAHASISWA: 'MAHASISWA',
+  DOSEN: 'DOSEN'
+};
+
+exports.kegiatan_status = exports.$Enums.kegiatan_status = {
+  DIAJUKAN: 'DIAJUKAN',
+  DISETUJUI: 'DISETUJUI',
+  DITOLAK: 'DITOLAK'
+};
+
+exports.status_permohonan = exports.$Enums.status_permohonan = {
+  TERKIRIM: 'TERKIRIM',
+  DITOLAK: 'DITOLAK',
+  DISETUJUI: 'DISETUJUI'
 };
 
 exports.Prisma.ModelName = {
   pengguna: 'pengguna',
-  tugas: 'tugas'
+  kegiatan: 'kegiatan',
+  logbook: 'logbook',
+  profil: 'profil',
+  permohonan_bimbingan: 'permohonan_bimbingan',
+  mata_kuliah: 'mata_kuliah',
+  lampiran_kegiatan: 'lampiran_kegiatan',
+  notifikasi: 'notifikasi'
 };
 
 /**

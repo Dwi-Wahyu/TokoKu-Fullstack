@@ -1,4 +1,3 @@
-import { PeranPengguna } from "@/generated/prisma";
 import NextAuth, { DefaultSession, User } from "next-auth";
 
 declare module "next-auth" {
@@ -7,6 +6,7 @@ declare module "next-auth" {
       id: string;
       username: string;
       nama: string;
+      peran: string;
       avatar: string;
     };
   }
@@ -15,7 +15,7 @@ declare module "next-auth" {
     id: string;
     username: string;
     nama: string;
-    peran: PeranPengguna;
+    peran: string;
     avatar: string | null;
   }
 }

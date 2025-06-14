@@ -34,20 +34,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { usePost } from "@/hooks/useAxios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronLeft, Loader2, Plus } from "lucide-react";
+import { Check, ChevronLeft, Loader2, Plus, UserPlusIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
-
-enum FormFields {
-  NAMA = "nama",
-  USERNAME = "username",
-  PASSWORD = "password",
-  PERAN = "peran",
-}
 
 export default function TambahPengguna() {
   const [loading, setLoading] = useState(false);
@@ -62,21 +54,33 @@ export default function TambahPengguna() {
     },
   });
 
+  const peran = useWatch({
+    control: form.control,
+    name: "peran",
+  });
+
+  // TODO: handle error ketika unique constraint failed
   async function onSubmit(values: TTambahPenggunaSchema) {
     setLoading(true);
 
-    const { success, field, errorCode, error } = await tambahPengguna(values);
+    const { success } = await tambahPengguna(values);
+    // const { success, field, errorCode, error } = await tambahPengguna(values);
 
     if (success) {
-      toast.success("Berhasil tambah pengguna");
-      form.reset();
-    } else if (errorCode === "P2002") {
-      form.setError(field as FormFields, {
-        message: `${field} tidak tersedia`,
+      toast.success("Akun Baru Terdaftar", {
+        description:
+          "Pengguna baru telah berhasil ditambahkan ke dalam sistem.",
+        icon: <UserPlusIcon />,
       });
-    } else {
-      console.log(error);
+      form.reset();
     }
+    // } else if (errorCode === "P2002") {
+    //   form.setError(field as FormFields, {
+    //     message: `${field} tidak tersedia`,
+    //   });
+    // } else {
+    //   console.log(error);
+    // }
 
     setLoading(false);
   }
@@ -157,8 +161,8 @@ export default function TambahPengguna() {
                         <SelectValue placeholder="Pilih Peran" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="asisten">Asisten</SelectItem>
-                        <SelectItem value="praktikan">Praktikan</SelectItem>
+                        <SelectItem value="DOSEN">Dosen</SelectItem>
+                        <SelectItem value="MAHASISWA">Mahasiswa</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -167,13 +171,7 @@ export default function TambahPengguna() {
               )}
             />
           </CardContent>
-          <CardFooter className="flex mt-5 justify-between">
-            <Link href="/admin/pengguna">
-              <Button variant={"outline"}>
-                <ChevronLeft /> Kembali
-              </Button>
-            </Link>
-
+          <CardFooter className="flex mt-5 justify-end">
             <Button type="submit" disabled={loading}>
               {loading ? <Loader2 className="animate-spin mr-2" /> : <Plus />}
               Submit

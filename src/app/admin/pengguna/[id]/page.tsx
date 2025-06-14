@@ -25,13 +25,17 @@ export default async function EditPengguna({
     return <h1>Pengguna Tidak Ditemukan</h1>;
   }
 
+  const allowedPeran =
+    pengguna.peran === "ADMIN"
+      ? undefined
+      : (pengguna.peran as "MAHASISWA" | "DOSEN" | undefined);
+
   return (
     <Suspense fallback={<Skeleton className="w-full h-60" />}>
       <EditPenggunaForm
         id={id}
         username={pengguna.username}
         nama={pengguna.nama}
-        peran={pengguna.peran}
       />
     </Suspense>
   );

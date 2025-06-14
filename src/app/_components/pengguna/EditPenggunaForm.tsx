@@ -39,31 +39,26 @@ import {
   TEditPenggunaSchema,
 } from "@/schema/pengguna/EditPenggunaSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, Edit, KeySquare, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { editPengguna } from "@/app/_lib/actions/penggunaActions";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 type TEditPenggunaFormProps = {
   id: string;
   username: string;
   nama: string;
-  peran: "asisten" | "praktikan" | "admin" | undefined;
 };
 
-enum FormFields {
-  NAMA = "nama",
-  USERNAME = "username",
-  PERAN = "peran",
-}
+type FormFields = keyof TEditPenggunaSchema;
 
 export function EditPenggunaForm({
   id,
   nama,
-  peran,
   username,
 }: TEditPenggunaFormProps) {
   const form = useForm<TEditPenggunaSchema>({
@@ -71,23 +66,29 @@ export function EditPenggunaForm({
     defaultValues: {
       nama: nama,
       username: username,
-      peran: peran,
     },
   });
 
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
 
+  // TODO: handle error ketika unique constraint failed
   async function onSubmit(payload: TEditPenggunaSchema) {
     setLoading(true);
 
     try {
-      const { success, error, errorCode, field } = await editPengguna(
-        id,
-        payload
-      );
+      const { success, errorCode, field, error, validationErrors } =
+        await editPengguna(id, payload);
 
       if (success) {
-        toast.success("Berhasil update pengguna");
+        toast.success("Pengguna Diperbarui", {
+          description: "Perubahan data pengguna telah berhasil disimpan.",
+          action: {
+            label: "Pratinjau",
+            onClick: () => router.push("/admin/pengguna/detail/" + id),
+          },
+        });
       } else if (errorCode === "P2002") {
         form.setError(field as FormFields, {
           message: `${field} tidak tersedia`,
@@ -145,39 +146,17 @@ export function EditPenggunaForm({
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="peran"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Peran</FormLabel>
-                  <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Pilih Peran" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="asisten">Asisten</SelectItem>
-                        <SelectItem value="praktikan">Praktikan</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </CardContent>
           <CardFooter className="flex mt-5 justify-between">
-            <Link href="/admin/pengguna">
-              <Button variant={"outline"}>
-                <ChevronLeft /> Kembali
-              </Button>
-            </Link>
+            <Button
+              type="button"
+              variant={"outline"}
+              onClick={() => router.back()}
+            >
+              <ChevronLeft /> Kembali
+            </Button>
 
+            {/* TODO: Buat fungsi ganti password */}
             <div className="flex gap-2">
               <Dialog>
                 <DialogTrigger asChild>

@@ -1,0 +1,5 @@
+- perbaiki semua toast yang tdk pake CustomToast
+
+- fix hapus pengguna toast
+
+- tentukan logika untuk mengubah pembimbing apakah promotor bisa jadi sekaligus pembimbing atau ko promotor

@@ -96,17 +96,84 @@ exports.Prisma.PenggunaScalarFieldEnum = {
   username: 'username',
   password: 'password',
   peran: 'peran',
+  avatar: 'avatar',
+  signature: 'signature',
+  pembimbingId: 'pembimbingId',
+  koPromotorId: 'koPromotorId',
+  promotorId: 'promotorId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.TugasScalarFieldEnum = {
+exports.Prisma.KegiatanScalarFieldEnum = {
   id: 'id',
   judul: 'judul',
-  deskripsi: 'deskripsi',
-  deadline: 'deadline',
+  lokasi: 'lokasi',
+  tanggalMulai: 'tanggalMulai',
+  tanggalSelesai: 'tanggalSelesai',
+  catatan: 'catatan',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  pengajuId: 'pengajuId',
+  mata_kuliahId: 'mata_kuliahId'
+};
+
+exports.Prisma.LogbookScalarFieldEnum = {
+  id: 'id',
+  path: 'path',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  penggunaId: 'penggunaId'
+};
+
+exports.Prisma.ProfilScalarFieldEnum = {
+  id: 'id',
+  judulDisertasi: 'judulDisertasi',
+  angkatan: 'angkatan',
+  tempatTanggalLahir: 'tempatTanggalLahir',
+  alamat: 'alamat',
+  alamatKeluarga: 'alamatKeluarga',
+  tahunLulus: 'tahunLulus',
+  mulaiMasukPendidikan: 'mulaiMasukPendidikan',
+  pekerjaan: 'pekerjaan',
+  nomorTelpon: 'nomorTelpon',
+  email: 'email',
+  penggunaId: 'penggunaId'
+};
+
+exports.Prisma.Permohonan_bimbinganScalarFieldEnum = {
+  id: 'id',
+  statusPermohonan: 'statusPermohonan',
+  kalimatPermohonan: 'kalimatPermohonan',
+  alasanDitolak: 'alasanDitolak',
+  mahasiswaId: 'mahasiswaId',
+  dosenId: 'dosenId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.Mata_kuliahScalarFieldEnum = {
+  id: 'id',
+  judul: 'judul',
+  semester: 'semester',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.Lampiran_kegiatanScalarFieldEnum = {
+  id: 'id',
+  path: 'path',
+  ext: 'ext',
+  kegiatanId: 'kegiatanId'
+};
+
+exports.Prisma.NotifikasiScalarFieldEnum = {
+  id: 'id',
+  judul: 'judul',
+  pesan: 'pesan',
+  dibaca: 'dibaca',
+  createdAt: 'createdAt',
+  penggunaId: 'penggunaId'
 };
 
 exports.Prisma.SortOrder = {
@@ -114,26 +181,101 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.penggunaOrderByRelevanceFieldEnum = {
   id: 'id',
   nama: 'nama',
   username: 'username',
-  password: 'password'
+  password: 'password',
+  avatar: 'avatar',
+  signature: 'signature',
+  pembimbingId: 'pembimbingId',
+  koPromotorId: 'koPromotorId',
+  promotorId: 'promotorId'
 };
 
-exports.Prisma.tugasOrderByRelevanceFieldEnum = {
+exports.Prisma.kegiatanOrderByRelevanceFieldEnum = {
   judul: 'judul',
-  deskripsi: 'deskripsi'
+  lokasi: 'lokasi',
+  catatan: 'catatan',
+  pengajuId: 'pengajuId'
 };
-exports.PeranPengguna = exports.$Enums.PeranPengguna = {
-  praktikan: 'praktikan',
-  asisten: 'asisten',
-  admin: 'admin'
+
+exports.Prisma.logbookOrderByRelevanceFieldEnum = {
+  path: 'path',
+  penggunaId: 'penggunaId'
+};
+
+exports.Prisma.profilOrderByRelevanceFieldEnum = {
+  judulDisertasi: 'judulDisertasi',
+  angkatan: 'angkatan',
+  tempatTanggalLahir: 'tempatTanggalLahir',
+  alamat: 'alamat',
+  alamatKeluarga: 'alamatKeluarga',
+  tahunLulus: 'tahunLulus',
+  pekerjaan: 'pekerjaan',
+  nomorTelpon: 'nomorTelpon',
+  email: 'email',
+  penggunaId: 'penggunaId'
+};
+
+exports.Prisma.permohonan_bimbinganOrderByRelevanceFieldEnum = {
+  kalimatPermohonan: 'kalimatPermohonan',
+  alasanDitolak: 'alasanDitolak',
+  mahasiswaId: 'mahasiswaId',
+  dosenId: 'dosenId'
+};
+
+exports.Prisma.mata_kuliahOrderByRelevanceFieldEnum = {
+  judul: 'judul'
+};
+
+exports.Prisma.lampiran_kegiatanOrderByRelevanceFieldEnum = {
+  path: 'path',
+  ext: 'ext'
+};
+
+exports.Prisma.notifikasiOrderByRelevanceFieldEnum = {
+  judul: 'judul',
+  pesan: 'pesan',
+  penggunaId: 'penggunaId'
+};
+exports.peran_pembimbing = exports.$Enums.peran_pembimbing = {
+  PROMOTOR: 'PROMOTOR',
+  KOPROMOTOR: 'KOPROMOTOR'
+};
+
+exports.status_permohonan = exports.$Enums.status_permohonan = {
+  TERKIRIM: 'TERKIRIM',
+  DITOLAK: 'DITOLAK',
+  DISETUJUI: 'DISETUJUI'
+};
+
+exports.pengguna_peran = exports.$Enums.pengguna_peran = {
+  ADMIN: 'ADMIN',
+  MAHASISWA: 'MAHASISWA',
+  DOSEN: 'DOSEN'
+};
+
+exports.kegiatan_status = exports.$Enums.kegiatan_status = {
+  DIAJUKAN: 'DIAJUKAN',
+  DISETUJUI: 'DISETUJUI',
+  DITOLAK: 'DITOLAK'
 };
 
 exports.Prisma.ModelName = {
   pengguna: 'pengguna',
-  tugas: 'tugas'
+  kegiatan: 'kegiatan',
+  logbook: 'logbook',
+  profil: 'profil',
+  permohonan_bimbingan: 'permohonan_bimbingan',
+  mata_kuliah: 'mata_kuliah',
+  lampiran_kegiatan: 'lampiran_kegiatan',
+  notifikasi: 'notifikasi'
 };
 /**
  * Create the Client
@@ -146,7 +288,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Programming\\Next js\\nextjs15-fullstack-starterpack\\src\\generated\\prisma",
+      "value": "C:\\Programming\\Next js\\LogbookFKG\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -160,7 +302,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Programming\\Next js\\nextjs15-fullstack-starterpack\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Programming\\Next js\\LogbookFKG\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -178,12 +320,12 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "mysql://root:@localhost:3306/asistensi-manager"
+        "value": "mysql://root:EpaRIUOmzDnfNKUMjWXORXbNPmqyhmYW@centerbeam.proxy.rlwy.net:47887/railway"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nenum PeranPengguna {\n  praktikan\n  asisten\n  admin\n}\n\nmodel pengguna {\n  id        String        @id @default(uuid())\n  nama      String\n  username  String        @unique\n  password  String\n  peran     PeranPengguna @default(praktikan)\n  createdAt DateTime      @default(now())\n  updatedAt DateTime      @updatedAt()\n}\n\nmodel tugas {\n  id        Int      @id @default(autoincrement())\n  judul     String   @unique\n  deskripsi String   @db.Text\n  deadline  DateTime\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt()\n}\n",
-  "inlineSchemaHash": "ef56fcaaf43683d0e53aaf39318be386e4129ee01d96ab591858c2aa7881d204",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel pengguna {\n  id        String         @id @default(uuid())\n  nama      String         @unique\n  username  String         @unique // nip untuk dosen, nim untuk mahasiswa\n  password  String\n  peran     pengguna_peran @default(MAHASISWA)\n  avatar    String?\n  signature String?\n\n  profil profil?\n\n  bimbingan    pengguna[] @relation(\"MahasiswaBimbingan\")\n  pembimbing   pengguna?  @relation(\"MahasiswaBimbingan\", fields: [pembimbingId], references: [id])\n  pembimbingId String?\n\n  koPromotorMahasiswa pengguna[] @relation(\"KoPromotorMahasiswa\")\n  koPromotor          pengguna?  @relation(\"KoPromotorMahasiswa\", fields: [koPromotorId], references: [id])\n  koPromotorId        String?\n\n  promotorMahasiswa pengguna[] @relation(\"PromotorMahasiswa\")\n  promotor          pengguna?  @relation(\"PromotorMahasiswa\", fields: [promotorId], references: [id])\n  promotorId        String?\n\n  createdAt  DateTime     @default(now())\n  updatedAt  DateTime     @updatedAt\n  notifikasi notifikasi[]\n\n  kegiatan kegiatan[] @relation(\"KegiatanDiajukan\")\n\n  logbook logbook?\n\n  permohonan_bimbingan_dibuat   permohonan_bimbingan[] @relation(\"PermohonanBimbinganDibuat\")\n  permohonan_bimbingan_diterima permohonan_bimbingan[] @relation(\"PermohonanBimbinganDiterima\")\n}\n\nmodel kegiatan {\n  id             Int       @id @default(autoincrement())\n  judul          String\n  lokasi         String?\n  tanggalMulai   DateTime?\n  tanggalSelesai DateTime?\n\n  catatan   String?\n  status    kegiatan_status     @default(DIAJUKAN)\n  createdAt DateTime            @default(now())\n  updatedAt DateTime            @updatedAt\n  lampiran  lampiran_kegiatan[]\n\n  pengaju   pengguna? @relation(\"KegiatanDiajukan\", fields: [pengajuId], references: [id])\n  pengajuId String?\n\n  mata_kuliah   mata_kuliah? @relation(fields: [mata_kuliahId], references: [id])\n  mata_kuliahId Int?\n}\n\nmodel logbook {\n  id         Int       @id @default(autoincrement())\n  path       String\n  createdAt  DateTime  @default(now())\n  updatedAt  DateTime  @updatedAt\n  pengguna   pengguna? @relation(fields: [penggunaId], references: [id])\n  penggunaId String?   @unique\n}\n\nmodel profil {\n  id Int @id @default(autoincrement())\n\n  judulDisertasi       String?\n  angkatan             String?\n  tempatTanggalLahir   String?\n  alamat               String?\n  alamatKeluarga       String?\n  tahunLulus           String?\n  mulaiMasukPendidikan DateTime?\n  pekerjaan            String?\n  nomorTelpon          String?\n  email                String?\n\n  // Relasi ke pengguna menggunakan ID\n  pengguna   pengguna @relation(fields: [penggunaId], references: [id])\n  penggunaId String   @unique\n}\n\nmodel permohonan_bimbingan {\n  id                Int               @id @default(autoincrement())\n  statusPermohonan  status_permohonan @default(TERKIRIM)\n  kalimatPermohonan String            @db.Text\n  alasanDitolak     String?\n  mahasiswa         pengguna?         @relation(\"PermohonanBimbinganDibuat\", fields: [mahasiswaId], references: [id])\n  mahasiswaId       String?\n  dosen             pengguna?         @relation(\"PermohonanBimbinganDiterima\", fields: [dosenId], references: [id])\n  dosenId           String?\n  createdAt         DateTime          @default(now())\n}\n\nmodel mata_kuliah {\n  id        Int        @id @default(autoincrement())\n  judul     String     @unique()\n  semester  Int\n  createdAt DateTime   @default(now())\n  updatedAt DateTime   @updatedAt\n  kegiatan  kegiatan[]\n}\n\nmodel lampiran_kegiatan {\n  id         Int       @id @default(autoincrement())\n  path       String\n  ext        String\n  kegiatan   kegiatan? @relation(fields: [kegiatanId], references: [id])\n  kegiatanId Int?\n}\n\nmodel notifikasi {\n  id         Int      @id @default(autoincrement())\n  judul      String\n  pesan      String   @db.Text\n  dibaca     Boolean  @default(false)\n  createdAt  DateTime @default(now())\n  penggunaId String\n  pengguna   pengguna @relation(fields: [penggunaId], references: [id], map: \"Notifikasi_penggunaId_fkey\")\n\n  @@index([penggunaId], map: \"Notifikasi_penggunaId_fkey\")\n}\n\nenum peran_pembimbing {\n  PROMOTOR\n  KOPROMOTOR\n}\n\nenum status_permohonan {\n  TERKIRIM\n  DITOLAK\n  DISETUJUI\n}\n\nenum pengguna_peran {\n  ADMIN\n  MAHASISWA\n  DOSEN\n}\n\nenum kegiatan_status {\n  DIAJUKAN\n  DISETUJUI\n  DITOLAK\n}\n",
+  "inlineSchemaHash": "e39dbcf7c503a4e9de924dee253c19b0fd2618effaf85802c71438cb03aed46f",
   "copyEngine": true
 }
 
@@ -204,7 +346,7 @@ if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   config.isBundled = true
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"pengguna\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":null,\"default\":{\"name\":\"uuid\",\"args\":[4]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"nama\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"username\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":true,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"password\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"peran\",\"kind\":\"enum\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"PeranPengguna\",\"nativeType\":null,\"default\":\"praktikan\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":true}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"tugas\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"judul\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":true,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"deskripsi\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":[\"Text\",[]],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"deadline\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":true}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{\"PeranPengguna\":{\"values\":[{\"name\":\"praktikan\",\"dbName\":null},{\"name\":\"asisten\",\"dbName\":null},{\"name\":\"admin\",\"dbName\":null}],\"dbName\":null}},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"pengguna\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"String\",\"nativeType\":null,\"default\":{\"name\":\"uuid\",\"args\":[4]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"nama\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":true,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"username\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":true,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"password\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"peran\",\"kind\":\"enum\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"pengguna_peran\",\"nativeType\":null,\"default\":\"MAHASISWA\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"avatar\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"signature\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"profil\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"profil\",\"nativeType\":null,\"relationName\":\"penggunaToprofil\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"bimbingan\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"MahasiswaBimbingan\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"pembimbing\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"MahasiswaBimbingan\",\"relationFromFields\":[\"pembimbingId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"pembimbingId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"koPromotorMahasiswa\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"KoPromotorMahasiswa\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"koPromotor\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"KoPromotorMahasiswa\",\"relationFromFields\":[\"koPromotorId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"koPromotorId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"promotorMahasiswa\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"PromotorMahasiswa\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"promotor\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"PromotorMahasiswa\",\"relationFromFields\":[\"promotorId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"promotorId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":true},{\"name\":\"notifikasi\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"notifikasi\",\"nativeType\":null,\"relationName\":\"notifikasiTopengguna\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"kegiatan\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"kegiatan\",\"nativeType\":null,\"relationName\":\"KegiatanDiajukan\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"logbook\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"logbook\",\"nativeType\":null,\"relationName\":\"logbookTopengguna\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"permohonan_bimbingan_dibuat\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"permohonan_bimbingan\",\"nativeType\":null,\"relationName\":\"PermohonanBimbinganDibuat\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"permohonan_bimbingan_diterima\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"permohonan_bimbingan\",\"nativeType\":null,\"relationName\":\"PermohonanBimbinganDiterima\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"kegiatan\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"judul\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"lokasi\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"tanggalMulai\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"tanggalSelesai\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"catatan\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"status\",\"kind\":\"enum\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"kegiatan_status\",\"nativeType\":null,\"default\":\"DIAJUKAN\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":true},{\"name\":\"lampiran\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"lampiran_kegiatan\",\"nativeType\":null,\"relationName\":\"kegiatanTolampiran_kegiatan\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"pengaju\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"KegiatanDiajukan\",\"relationFromFields\":[\"pengajuId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"pengajuId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"mata_kuliah\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"mata_kuliah\",\"nativeType\":null,\"relationName\":\"kegiatanTomata_kuliah\",\"relationFromFields\":[\"mata_kuliahId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"mata_kuliahId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"logbook\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"path\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":true},{\"name\":\"pengguna\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"logbookTopengguna\",\"relationFromFields\":[\"penggunaId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"penggunaId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":true,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"profil\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"judulDisertasi\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"angkatan\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"tempatTanggalLahir\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"alamat\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"alamatKeluarga\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"tahunLulus\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"mulaiMasukPendidikan\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"pekerjaan\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"nomorTelpon\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"email\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"pengguna\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"penggunaToprofil\",\"relationFromFields\":[\"penggunaId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"penggunaId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":true,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"permohonan_bimbingan\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"statusPermohonan\",\"kind\":\"enum\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"status_permohonan\",\"nativeType\":null,\"default\":\"TERKIRIM\",\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"kalimatPermohonan\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":[\"Text\",[]],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"alasanDitolak\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"mahasiswa\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"PermohonanBimbinganDibuat\",\"relationFromFields\":[\"mahasiswaId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"mahasiswaId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"dosen\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"PermohonanBimbinganDiterima\",\"relationFromFields\":[\"dosenId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"dosenId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"mata_kuliah\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"judul\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":true,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"semester\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"DateTime\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":true},{\"name\":\"kegiatan\",\"kind\":\"object\",\"isList\":true,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"kegiatan\",\"nativeType\":null,\"relationName\":\"kegiatanTomata_kuliah\",\"relationFromFields\":[],\"relationToFields\":[],\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"lampiran_kegiatan\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"path\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"ext\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"kegiatan\",\"kind\":\"object\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"kegiatan\",\"nativeType\":null,\"relationName\":\"kegiatanTolampiran_kegiatan\",\"relationFromFields\":[\"kegiatanId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"kegiatanId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":false,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"Int\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false},\"notifikasi\":{\"dbName\":null,\"schema\":null,\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":true,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Int\",\"nativeType\":null,\"default\":{\"name\":\"autoincrement\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"judul\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"pesan\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":[\"Text\",[]],\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"dibaca\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"Boolean\",\"nativeType\":null,\"default\":false,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":true,\"type\":\"DateTime\",\"nativeType\":null,\"default\":{\"name\":\"now\",\"args\":[]},\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"penggunaId\",\"kind\":\"scalar\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":true,\"hasDefaultValue\":false,\"type\":\"String\",\"nativeType\":null,\"isGenerated\":false,\"isUpdatedAt\":false},{\"name\":\"pengguna\",\"kind\":\"object\",\"isList\":false,\"isRequired\":true,\"isUnique\":false,\"isId\":false,\"isReadOnly\":false,\"hasDefaultValue\":false,\"type\":\"pengguna\",\"nativeType\":null,\"relationName\":\"notifikasiTopengguna\",\"relationFromFields\":[\"penggunaId\"],\"relationToFields\":[\"id\"],\"isGenerated\":false,\"isUpdatedAt\":false}],\"primaryKey\":null,\"uniqueFields\":[],\"uniqueIndexes\":[],\"isGenerated\":false}},\"enums\":{\"peran_pembimbing\":{\"values\":[{\"name\":\"PROMOTOR\",\"dbName\":null},{\"name\":\"KOPROMOTOR\",\"dbName\":null}],\"dbName\":null},\"status_permohonan\":{\"values\":[{\"name\":\"TERKIRIM\",\"dbName\":null},{\"name\":\"DITOLAK\",\"dbName\":null},{\"name\":\"DISETUJUI\",\"dbName\":null}],\"dbName\":null},\"pengguna_peran\":{\"values\":[{\"name\":\"ADMIN\",\"dbName\":null},{\"name\":\"MAHASISWA\",\"dbName\":null},{\"name\":\"DOSEN\",\"dbName\":null}],\"dbName\":null},\"kegiatan_status\":{\"values\":[{\"name\":\"DIAJUKAN\",\"dbName\":null},{\"name\":\"DISETUJUI\",\"dbName\":null},{\"name\":\"DITOLAK\",\"dbName\":null}],\"dbName\":null}},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = undefined
 config.compilerWasm = undefined
