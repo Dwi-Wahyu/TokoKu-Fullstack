@@ -23,6 +23,7 @@ export default async function DaftarKegiatan(props: IndexPageProps) {
   const updatedSearch = {
     ...search,
     semester: search.semester,
+    id_mata_kuliah: search.id_mata_kuliah,
   };
 
   const promises = Promise.all([getKegiatan(updatedSearch)]);

@@ -7,6 +7,7 @@ import {
   Check,
   Edit,
   Eye,
+  FunnelX,
   Loader2,
   MoreHorizontal,
   Signature,
@@ -71,7 +72,7 @@ interface TableProps {
 }
 
 export function KegiatanTable({ promises }: TableProps) {
-  const [{ data, pageCount }] = React.use(promises);
+  const [{ data, pageCount, allMataKuliah }] = React.use(promises);
   const session = useSession();
 
   const [openHapusDialog, setOpenHapusDialog] = useState(false);
@@ -80,6 +81,11 @@ export function KegiatanTable({ promises }: TableProps) {
   const [selectedId, setSelectedId] = useState(0);
 
   const [nama, setNama] = useQueryState("nama_mahasiswa", {
+    defaultValue: "",
+    shallow: false,
+  });
+
+  const [mataKuliah, setMataKuliah] = useQueryState("id_mata_kuliah", {
     defaultValue: "",
     shallow: false,
   });
@@ -178,7 +184,6 @@ export function KegiatanTable({ promises }: TableProps) {
     header: "Mahasiswa",
   };
 
-  // Buat aksi mahasiswa sebagai dropdown
   const aksiMahasiswa = {
     id: "id",
     header: "Aksi",
@@ -217,6 +222,8 @@ export function KegiatanTable({ promises }: TableProps) {
       );
     },
   };
+
+  const isDosen = session.data?.user.peran === "DOSEN";
 
   switch (session.data?.user.peran) {
     case "DOSEN":
@@ -263,6 +270,12 @@ export function KegiatanTable({ promises }: TableProps) {
     setLoading(false);
   }
 
+  async function clearFilter() {
+    setNama("");
+    setMataKuliah("");
+    setStatus("");
+  }
+
   return (
     <>
       <AlertDialog open={openHapusDialog} onOpenChange={setOpenHapusDialog}>
@@ -288,11 +301,29 @@ export function KegiatanTable({ promises }: TableProps) {
       <DataTable table={table}>
         <DataTableAdvancedToolbar table={table}>
           <div className="flex gap-2 items-center flex-col sm:flex-row">
-            <Input
-              placeholder="Cari mahasiswa . . ."
-              value={nama}
-              onChange={(e) => setNama(e.target.value)}
-            />
+            {isDosen && (
+              <Input
+                placeholder="Cari mahasiswa . . ."
+                value={nama}
+                onChange={(e) => setNama(e.target.value)}
+              />
+            )}
+
+            <Select
+              onValueChange={(val) => setMataKuliah(val)}
+              value={mataKuliah}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter Mata Kuliah" />
+              </SelectTrigger>
+              <SelectContent>
+                {allMataKuliah.map((value) => (
+                  <SelectItem key={value.id} value={value.id.toString()}>
+                    {value.judul}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
             <Select onValueChange={(val) => setStatus(val)} value={status}>
               <SelectTrigger className="w-[180px]">
@@ -304,6 +335,10 @@ export function KegiatanTable({ promises }: TableProps) {
                 <SelectItem value="DIAJUKAN">Diajukan</SelectItem>
               </SelectContent>
             </Select>
+
+            <Button variant={"outline"} onClick={() => clearFilter()}>
+              <FunnelX />
+            </Button>
           </div>
         </DataTableAdvancedToolbar>
       </DataTable>

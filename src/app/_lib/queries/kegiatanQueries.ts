@@ -13,8 +13,6 @@ export async function getAllMataKuliah() {
 }
 
 export async function getMataKuliah(input: TDefaultTableSearchParams) {
-  console.log(input.search);
-
   const filtered = await prisma.mata_kuliah.count({
     where: {
       judul: {
@@ -42,6 +40,13 @@ export async function getKegiatan(input: TKegiatanSearchParams) {
 
   // Base where clause for kegiatan
   let whereClause: Prisma.kegiatanWhereInput = {};
+  let mataKuliahWehereClause: Prisma.mata_kuliahWhereInput = {};
+
+  if (input.semester) {
+    mataKuliahWehereClause = {
+      semester: input.semester,
+    };
+  }
 
   if (session?.user.peran === "DOSEN") {
     // Untuk dosen, cari kegiatan mahasiswa bimbingannya
@@ -54,6 +59,9 @@ export async function getKegiatan(input: TKegiatanSearchParams) {
         mata_kuliah: {
           semester: input.semester,
         },
+      }),
+      ...(input.id_mata_kuliah && {
+        mata_kuliahId: input.id_mata_kuliah,
       }),
       ...(input.nama_mahasiswa && {
         pengaju: {
@@ -74,6 +82,9 @@ export async function getKegiatan(input: TKegiatanSearchParams) {
           semester: input.semester,
         },
       }),
+      ...(input.id_mata_kuliah && {
+        mata_kuliahId: input.id_mata_kuliah,
+      }),
       ...(input.status && {
         status: input.status,
       }),
@@ -83,6 +94,10 @@ export async function getKegiatan(input: TKegiatanSearchParams) {
   // Hitung total data untuk pagination
   const filtered = await prisma.kegiatan.count({
     where: whereClause,
+  });
+
+  const allMataKuliah = await prisma.mata_kuliah.findMany({
+    where: mataKuliahWehereClause,
   });
 
   // Ambil data kegiatan
@@ -130,68 +145,8 @@ export async function getKegiatan(input: TKegiatanSearchParams) {
 
   return {
     data,
+    allMataKuliah,
     pageCount,
     filtered,
   };
 }
-
-// export async function getKegiatan(input: TKegiatanSearchParams) {
-//   const session = await auth();
-
-//   type whereType = Prisma.kegiatanWhereInput;
-
-//   let whereClause: whereType = {};
-
-//   if (session?.user.peran === "DOSEN") {
-//     whereClause = {
-//       penanggungJawabId: session?.user.id,
-//       ...(input.semester !== 0 && {
-//         mata_kuliah: {
-//           semester: input.semester,
-//         },
-//       }),
-//     };
-//   } else {
-//     whereClause = {
-//       pengajuId: session?.user.id,
-//       ...(input.semester !== 0 && {
-//         mata_kuliah: {
-//           semester: input.semester,
-//         },
-//       }),
-//     };
-//   }
-
-//   const filtered = await prisma.kegiatan.count({
-//     where: whereClause,
-//   });
-//   const data = await prisma.kegiatan.findMany({
-//     take: input.perPage,
-//     where: whereClause,
-//     skip: (input.page - 1) * input.perPage,
-//     select: {
-//       id: true,
-//       pengaju: {
-//         select: {
-//           nama: true,
-//         },
-//       },
-//       judul: true,
-//       alasanPenolakan: true,
-//       status: true,
-//       tanggalMulai: true,
-//       tanggalSelesai: true,
-//       createdAt: true,
-//       mata_kuliah: {
-//         select: {
-//           semester: true,
-//           judul: true,
-//         },
-//       },
-//     },
-//   });
-
-//   const pageCount = Math.ceil(filtered / input.perPage);
-
-//   return { data, pageCount, filtered };
-// }

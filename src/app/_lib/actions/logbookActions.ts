@@ -33,11 +33,7 @@ export async function generateLogbook(id: string) {
     unlinkSync(previousPath);
   }
 
-  const templatePath = join(
-    process.cwd(),
-    "generated_logbook",
-    "template.docx"
-  );
+  const templatePath = join(process.cwd(), "public", "template.docx");
   const template = readFileSync(templatePath);
 
   const mulaiMasukPendidikan = dataPengguna.profil?.mulaiMasukPendidikan

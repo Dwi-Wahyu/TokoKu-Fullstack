@@ -46,6 +46,7 @@ import {
   editKegiatanSchema,
   TEditKegiatan,
 } from "@/schema/kegiatan/EditKegiatanSchema";
+import { useRouter } from "next/navigation";
 
 type MataKuliahProps = Awaited<ReturnType<typeof getAllMataKuliah>>;
 
@@ -61,6 +62,7 @@ export default function EditKegiatanForm({
   kegiatanData: KegiatanDataProps;
 }) {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<TEditKegiatan>({
     resolver: zodResolver(editKegiatanSchema),
@@ -99,13 +101,20 @@ export default function EditKegiatanForm({
     setLoading(false);
   }
 
+  function handleKembali() {
+    router.back();
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <Card className="w-full">
           <CardHeader>
-            <CardTitle>Form Input Kegiatan</CardTitle>
-            <CardDescription>Tolong Masukkan Data Kegiatan.</CardDescription>
+            <CardTitle>Form Edit Kegiatan</CardTitle>
+            <CardDescription>
+              Silakan perbarui informasi kegiatan dengan data yang valid dan
+              lengkap. Pastikan semua field terisi sesuai ketentuan sistem.
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
             {form.formState.errors.root && (
@@ -191,8 +200,12 @@ export default function EditKegiatanForm({
             />
           </CardContent>
           <CardFooter className="flex justify-end gap-4">
-            <Button type="button" asChild variant={"outline"}>
-              <Link href="/admin/kegiatan?semester=1">Kembali</Link>
+            <Button
+              onClick={() => handleKembali()}
+              type="button"
+              variant={"outline"}
+            >
+              Kembali
             </Button>
             <Button type="submit" disabled={loading}>
               {loading ? (

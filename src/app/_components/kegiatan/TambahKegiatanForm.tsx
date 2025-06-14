@@ -102,6 +102,10 @@ export default function TambahKegiatanForm({
     setLoading(false);
   }
 
+  function handleKembali() {
+    router.back();
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -267,8 +271,12 @@ export default function TambahKegiatanForm({
             />
           </CardContent>
           <CardFooter className="flex justify-end gap-4">
-            <Button type="button" asChild variant={"outline"}>
-              <Link href="/admin/kegiatan?semester=1">Kembali</Link>
+            <Button
+              onClick={() => handleKembali()}
+              type="button"
+              variant={"outline"}
+            >
+              Kembali
             </Button>
             <Button type="submit" disabled={loading}>
               {loading ? (

@@ -10,6 +10,11 @@
 !.yarn/releases
 !.yarn/versions
 
+generated_logbook/
+public/image/signature/
+public/image/profile-picture/
+public/lampiran/
+
 # testing
 /coverage
 

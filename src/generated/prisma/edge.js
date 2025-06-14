@@ -319,7 +319,7 @@ const config = {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "mysql://root:EpaRIUOmzDnfNKUMjWXORXbNPmqyhmYW@centerbeam.proxy.rlwy.net:47887/railway"
+        "value": "mysql://root:@localhost:3306/asistensi-manager"
       }
     }
   },
