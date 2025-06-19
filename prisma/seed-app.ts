@@ -1,7 +1,5 @@
-// import { PrismaClient } from "@/generated/prisma"; // Baris ini mungkin perlu disesuaikan jika PrismaClient ada di tempat lain
-import { PrismaClient } from "@prisma/client"; // Menggunakan import default dari @prisma/client
+import { PrismaClient } from "@/generated/prisma"; // Baris ini mungkin perlu disesuaikan jika PrismaClient ada di tempat lain
 import { hashSync } from "bcryptjs";
-// import { faker } from "@faker-js/faker/locale/id_ID"; // Tidak perlu faker jika hanya untuk admin dan mata_kuliah
 
 const prisma = new PrismaClient();
 
