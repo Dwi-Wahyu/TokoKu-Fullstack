@@ -33,10 +33,10 @@ export default async function DaftarPengguna(props: IndexPageProps) {
           <h1 className="font-semibold text-lg ">Daftar Dosen</h1>
 
           {session?.user.peran === "ADMIN" && (
-            <Link href="/admin/pengguna/tambah-pengguna">
+            <Link href="/admin/pengguna/dosen/tambah-dosen">
               <Button>
                 <UserPlus />
-                Tambah Pengguna
+                Tambah Akun Dosen
               </Button>
             </Link>
           )}

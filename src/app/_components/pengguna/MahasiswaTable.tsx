@@ -39,6 +39,7 @@ import { Input } from "@/components/ui/input";
 import { useQueryState } from "nuqs";
 
 import { useSession } from "next-auth/react";
+import { CustomToast } from "@/components/toast";
 
 type TableType = Awaited<ReturnType<typeof getPengguna>>;
 
@@ -166,9 +167,13 @@ export function MahasiswaTable({ promises }: TableProps) {
     const request = await deletePengguna(selectedId);
 
     if (request.success) {
-      toast.success("Akun Dihapus", {
-        description: "Pengguna telah berhasil dihapus dari sistem.",
-      });
+      toast.custom(() =>
+        CustomToast({
+          title: "Akun Dihapus",
+          description: "Pengguna telah berhasil dihapus dari sistem.",
+          variant: "success",
+        })
+      );
 
       setLoading(false);
       setOpen(false);

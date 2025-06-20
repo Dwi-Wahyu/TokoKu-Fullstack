@@ -1,13 +1,8 @@
 import "server-only";
 
-import { TSearchParamsSchema } from "@/schema/SearchParamsSchema";
-import { TTambahPenggunaSchema } from "@/schema/pengguna/TambahPenggunaSchema";
 import { prisma } from "@/lib/prisma";
-import { log } from "console";
-import { revalidatePath } from "next/cache";
 import { TPenggunaSearchParams } from "../validations/penggunaSearchParams";
 import { Prisma } from "@/generated/prisma";
-import { TGantiProfilSchema } from "@/schema/GantiProfilSchema";
 
 export async function getPengguna(input: TPenggunaSearchParams) {
   type WhereClause = Prisma.penggunaWhereInput;

@@ -5,7 +5,6 @@ import {
   tambahPenggunaSchema,
   TTambahPenggunaSchema,
 } from "@/schema/pengguna/TambahPenggunaSchema";
-import { ResponseType } from "@/types/respon-type";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,15 +27,12 @@ import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check, ChevronLeft, Loader2, Plus, UserPlusIcon } from "lucide-react";
-import Link from "next/link";
+import { Loader2, Plus } from "lucide-react";
 import { useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
@@ -51,28 +47,22 @@ export default function TambahPengguna() {
       nama: "",
       username: "",
       password: "",
-      peran: undefined,
+      peran: "MAHASISWA",
       angkatan: "",
     },
-  });
-
-  const peran = useWatch({
-    control: form.control,
-    name: "peran",
   });
 
   async function onSubmit(values: TTambahPenggunaSchema) {
     setLoading(true);
 
     const { success, error } = await tambahPengguna(values);
-    // const { success, field, errorCode, error } = await tambahPengguna(values);
 
     if (success) {
       toast.custom(() =>
         CustomToast({
           title: "Akun Baru Terdaftar",
           description:
-            "Pengguna baru telah berhasil ditambahkan ke dalam sistem.",
+            "Akun Mahasiswa telah terdaftar ke sistem. Kegiatan telah ditambahkan untuk mahasiswa",
           variant: "success",
         })
       );
@@ -90,8 +80,8 @@ export default function TambahPengguna() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <CardHeader>
-            <CardTitle>Form Input Pengguna</CardTitle>
-            <CardDescription>Tolong Masukkan Data Pengguna.</CardDescription>
+            <CardTitle>Form Input Mahasiswa</CardTitle>
+            <CardDescription>Tolong Masukkan Data Mahasiswa.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4 mt-5">
             {form.formState.errors.root && (
@@ -148,44 +138,17 @@ export default function TambahPengguna() {
 
             <FormField
               control={form.control}
-              name="peran"
+              name="angkatan"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Peran</FormLabel>
+                  <FormLabel>Angkatan</FormLabel>
                   <FormControl>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Pilih Peran" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="DOSEN">Dosen</SelectItem>
-                        <SelectItem value="MAHASISWA">Mahasiswa</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <Input placeholder="Tolong ketik Angkatan" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-            {peran === "MAHASISWA" && (
-              <FormField
-                control={form.control}
-                name="angkatan"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Angkatan</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Tolong ketik Angkatan" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            )}
           </CardContent>
           <CardFooter className="flex mt-5 justify-end">
             <Button type="submit" disabled={loading}>

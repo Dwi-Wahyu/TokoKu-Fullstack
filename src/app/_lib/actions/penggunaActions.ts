@@ -82,236 +82,247 @@ export async function tambahPengguna(payload: TTambahPenggunaSchema) {
   try {
     const hashedPw = hashSync(password, 8);
 
-    // Data dasar yang akan disimpan
-    const dataPengguna: any = {
-      nama,
-      username,
-      peran,
-      password: hashedPw,
-    };
+    if (peran === "DOSEN") {
+      const tambahPenggunaQuery = await prisma.pengguna.create({
+        data: {
+          nama,
+          username,
+          peran,
+          password: hashedPw,
+        },
+      });
+
+      return {
+        success: true,
+      };
+    }
 
     const tambahPenggunaQuery = await prisma.pengguna.create({
-      data: dataPengguna,
+      data: {
+        nama,
+        username,
+        peran,
+        password: hashedPw,
+        profil: {
+          create: {
+            angkatan,
+          },
+        },
+      },
     });
 
-    if (peran === "MAHASISWA") {
-      const mataKuliahFromDb = await prisma.mata_kuliah.findMany();
-      const mataKuliahMap = new Map(
-        mataKuliahFromDb.map((mk) => [mk.judul, mk.id])
-      );
+    const mataKuliahFromDb = await prisma.mata_kuliah.findMany();
+    const mataKuliahMap = new Map(
+      mataKuliahFromDb.map((mk) => [mk.judul, mk.id])
+    );
 
-      // Daftar kegiatan default yang sama dengan seed.ts
-      const kegiatanData = [
-        {
-          mataKuliah: "Seminar Progres 1 dan 2",
-          activities: [
-            "Diskusi topik penelitian",
-            "Penyusunan rencana penelitian",
-            "Konsultasi literatur",
-            "Revisi rencana penelitian",
-            "Penyusunan draf awal",
-            "Diskusi metodologi",
-            "Konsultasi dengan pembimbing",
-            "Penyusunan presentasi seminar",
-            "Latihan presentasi",
-            "Ujian seminar pra proposal",
-          ],
-        },
-        {
-          mataKuliah: "Seminar Proposal Disertasi",
-          activities: [
-            "Penyusunan draf proposal",
-            "Diskusi draf proposal",
-            "Revisi proposal",
-            "Konsultasi dengan ko-promotor",
-            "Penyusunan bab pendahuluan",
-            "Penyusunan bab metodologi",
-            "Konsultasi literatur proposal",
-            "Penyusunan presentasi proposal",
-            "Latihan presentasi proposal",
-            "Ujian seminar proposal",
-          ],
-        },
-        {
-          mataKuliah: "Seminar Progres 3 dan 4",
-          activities: [
-            "Pengumpulan data awal",
-            "Analisis data pendahuluan",
-            "Konsultasi metodologi",
-            "Revisi metodologi",
-            "Pengumpulan data tambahan",
-            "Diskusi hasil awal",
-            "Penyusunan laporan progres",
-            "Konsultasi dengan pembimbing",
-            "Latihan presentasi progres",
-            "Ujian Seminar Penelitian Pendahuluan",
-          ],
-        },
-        {
-          mataKuliah: "Presentasi Makalah di Seminar Internasional",
-          activities: [
-            "Membuat konsep judul yang berasal dari bagian hasil penelitian disertasi",
-            "Membuat abstrak makalah yang berasal dari bagian hasil penelitian disertasi",
-            "Membuat makalah yang relevan dengan topik disertasinya yang akan dipresentasikan pada seminar internasional",
-            "Mempresentasikan hasil penelitian yang relevan dengan topik disertasi pada seminar internasional",
-          ],
-        },
-        {
-          mataKuliah: "Seminar Progres 5",
-          activities: [
-            "Pengumpulan data lanjutan",
-            "Analisis data tahap kedua",
-            "Konsultasi hasil awal",
-            "Revisi analisis data",
-            "Penyusunan laporan hasil",
-            "Diskusi dengan ko-promotor",
-            "Penyusunan presentasi progres",
-            "Konsultasi dengan pembimbing",
-            "Latihan presentasi",
-            "Ujian seminar hasil penelitian",
-          ],
-        },
-        {
-          mataKuliah: "Publikasi Scopus 1",
-          activities: [
-            "Membuat naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi yang relevan dengan topik disertasinya",
-            "Mendiskusikan naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi",
-            "Mengirim naskah hasil penelitian yang akan dipublikasikan",
-            "Mempublikasikan penelitian yang relevan dengan topik disertasinya",
-          ],
-        },
-        {
-          mataKuliah: "Seminar Progres 6",
-          activities: [
-            "Analisis data lanjutan",
-            "Penyusunan laporan hasil",
-            "Konsultasi analisis data",
-            "Revisi laporan hasil",
-            "Diskusi dengan ko-promotor",
-            "Penyusunan presentasi progres",
-            "Konsultasi dengan pembimbing",
-            "Latihan presentasi",
-            "Penyusunan laporan akhir",
-            "Ujian Seminar Analisis hasil penelitian",
-          ],
-        },
-        {
-          mataKuliah: "Publikasi Scopus 2",
-          activities: [
-            "Membuat naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi yang relevan dengan topik disertasinya",
-            "Mendiskusikan naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi",
-            "Mengirim naskah hasil penelitian yang akan dipublikasikan",
-            "Mempublikasikan penelitian yang relevan dengan topik disertasinya",
-          ],
-        },
-        {
-          mataKuliah: "Presentasi Makalah di Seminar Internasional 2",
-          activities: [
-            "Membuat konsep judul yang berasal dari bagian hasil penelitian disertasi",
-            "Membuat abstrak makalah yang berasal dari bagian hasil penelitian disertasi",
-            "Membuat makalah yang relevan dengan topik disertasinya yang akan dipresentasikan pada seminar internasional",
-            "Mempresentasikan hasil penelitian yang relevan dengan topik disertasi pada seminar internasional",
-          ],
-        },
-        {
-          mataKuliah: "Publikasi Scopus 3",
-          activities: [
-            "Membuat naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi yang relevan dengan topik disertasinya",
-            "Mendiskusikan naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi",
-            "Mengirim naskah hasil penelitian yang akan dipublikasikan",
-            "Mempublikasikan penelitian yang relevan dengan topik disertasinya",
-          ],
-        },
-        {
-          mataKuliah: "Seminar Hasil Penelitian Disertasi",
-          activities: [
-            "Penyusunan laporan hasil penelitian",
-            "Diskusi hasil penelitian",
-            "Revisi laporan hasil",
-            "Konsultasi dengan pembimbing",
-            "Penyusunan presentasi hasil",
-            "Latihan presentasi hasil",
-            "Diskusi dengan ko-promotor",
-            "Revisi presentasi hasil",
-            "Konsultasi akhir hasil",
-            "Ujian Seminar hasil penelitian",
-          ],
-        },
-        {
-          mataKuliah: "Ujian Tutup Disertasi",
-          activities: [
-            "Penyusunan naskah disertasi",
-            "Konsultasi naskah disertasi",
-            "Revisi naskah disertasi",
-            "Diskusi dengan pembimbing",
-            "Penyusunan presentasi disertasi",
-            "Latihan presentasi disertasi",
-            "Konsultasi dengan ko-promotor",
-            "Revisi presentasi disertasi",
-            "Persiapan ujian tertutup",
-            "Ujian Disertasi Tertutup",
-          ],
-        },
-        {
-          mataKuliah: "Ujian Terbuka Disertasi",
-          activities: [
-            "Persiapan presentasi terbuka",
-            "Latihan presentasi disertasi",
-            "Konsultasi presentasi",
-            "Revisi presentasi terbuka",
-            "Diskusi dengan pembimbing",
-            "Penyusunan materi presentasi",
-            "Konsultasi dengan ko-promotor",
-            "Persiapan dokumen ujian",
-            "Latihan presentasi akhir",
-            "Ujian Disertasi Terbuka",
-          ],
-        },
-        {
-          mataKuliah: "Seminar Topik",
-          activities: [
-            "Literatur review",
-            "Systematic review",
-            "Meta analysis",
-            "Diskusi topik seminar",
-            "Penyusunan materi seminar",
-            "Konsultasi topik seminar",
-            "Revisi materi seminar",
-            "Latihan presentasi seminar",
-            "Konsultasi dengan pembimbing",
-            "Presentasi topik seminar",
-          ],
-        },
-      ];
+    const kegiatanData = [
+      {
+        mataKuliah: "Seminar Progres 1 dan 2",
+        activities: [
+          "Diskusi topik penelitian",
+          "Penyusunan rencana penelitian",
+          "Konsultasi literatur",
+          "Revisi rencana penelitian",
+          "Penyusunan draf awal",
+          "Diskusi metodologi",
+          "Konsultasi dengan pembimbing",
+          "Penyusunan presentasi seminar",
+          "Latihan presentasi",
+          "Ujian seminar pra proposal",
+        ],
+      },
+      {
+        mataKuliah: "Seminar Proposal Disertasi",
+        activities: [
+          "Penyusunan draf proposal",
+          "Diskusi draf proposal",
+          "Revisi proposal",
+          "Konsultasi dengan ko-promotor",
+          "Penyusunan bab pendahuluan",
+          "Penyusunan bab metodologi",
+          "Konsultasi literatur proposal",
+          "Penyusunan presentasi proposal",
+          "Latihan presentasi proposal",
+          "Ujian seminar proposal",
+        ],
+      },
+      {
+        mataKuliah: "Seminar Progres 3 dan 4",
+        activities: [
+          "Pengumpulan data awal",
+          "Analisis data pendahuluan",
+          "Konsultasi metodologi",
+          "Revisi metodologi",
+          "Pengumpulan data tambahan",
+          "Diskusi hasil awal",
+          "Penyusunan laporan progres",
+          "Konsultasi dengan pembimbing",
+          "Latihan presentasi progres",
+          "Ujian Seminar Penelitian Pendahuluan",
+        ],
+      },
+      {
+        mataKuliah: "Presentasi Makalah di Seminar Internasional",
+        activities: [
+          "Membuat konsep judul yang berasal dari bagian hasil penelitian disertasi",
+          "Membuat abstrak makalah yang berasal dari bagian hasil penelitian disertasi",
+          "Membuat makalah yang relevan dengan topik disertasinya yang akan dipresentasikan pada seminar internasional",
+          "Mempresentasikan hasil penelitian yang relevan dengan topik disertasi pada seminar internasional",
+        ],
+      },
+      {
+        mataKuliah: "Seminar Progres 5",
+        activities: [
+          "Pengumpulan data lanjutan",
+          "Analisis data tahap kedua",
+          "Konsultasi hasil awal",
+          "Revisi analisis data",
+          "Penyusunan laporan hasil",
+          "Diskusi dengan ko-promotor",
+          "Penyusunan presentasi progres",
+          "Konsultasi dengan pembimbing",
+          "Latihan presentasi",
+          "Ujian seminar hasil penelitian",
+        ],
+      },
+      {
+        mataKuliah: "Publikasi Scopus 1",
+        activities: [
+          "Membuat naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi yang relevan dengan topik disertasinya",
+          "Mendiskusikan naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi",
+          "Mengirim naskah hasil penelitian yang akan dipublikasikan",
+          "Mempublikasikan penelitian yang relevan dengan topik disertasinya",
+        ],
+      },
+      {
+        mataKuliah: "Seminar Progres 6",
+        activities: [
+          "Analisis data lanjutan",
+          "Penyusunan laporan hasil",
+          "Konsultasi analisis data",
+          "Revisi laporan hasil",
+          "Diskusi dengan ko-promotor",
+          "Penyusunan presentasi progres",
+          "Konsultasi dengan pembimbing",
+          "Latihan presentasi",
+          "Penyusunan laporan akhir",
+          "Ujian Seminar Analisis hasil penelitian",
+        ],
+      },
+      {
+        mataKuliah: "Publikasi Scopus 2",
+        activities: [
+          "Membuat naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi yang relevan dengan topik disertasinya",
+          "Mendiskusikan naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi",
+          "Mengirim naskah hasil penelitian yang akan dipublikasikan",
+          "Mempublikasikan penelitian yang relevan dengan topik disertasinya",
+        ],
+      },
+      {
+        mataKuliah: "Presentasi Makalah di Seminar Internasional 2",
+        activities: [
+          "Membuat konsep judul yang berasal dari bagian hasil penelitian disertasi",
+          "Membuat abstrak makalah yang berasal dari bagian hasil penelitian disertasi",
+          "Membuat makalah yang relevan dengan topik disertasinya yang akan dipresentasikan pada seminar internasional",
+          "Mempresentasikan hasil penelitian yang relevan dengan topik disertasi pada seminar internasional",
+        ],
+      },
+      {
+        mataKuliah: "Publikasi Scopus 3",
+        activities: [
+          "Membuat naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi yang relevan dengan topik disertasinya",
+          "Mendiskusikan naskah hasil penelitian yang akan dipublikasikan pada jurnal internasional bereputasi",
+          "Mengirim naskah hasil penelitian yang akan dipublikasikan",
+          "Mempublikasikan penelitian yang relevan dengan topik disertasinya",
+        ],
+      },
+      {
+        mataKuliah: "Seminar Hasil Penelitian Disertasi",
+        activities: [
+          "Penyusunan laporan hasil penelitian",
+          "Diskusi hasil penelitian",
+          "Revisi laporan hasil",
+          "Konsultasi dengan pembimbing",
+          "Penyusunan presentasi hasil",
+          "Latihan presentasi hasil",
+          "Diskusi dengan ko-promotor",
+          "Revisi presentasi hasil",
+          "Konsultasi akhir hasil",
+          "Ujian Seminar hasil penelitian",
+        ],
+      },
+      {
+        mataKuliah: "Ujian Tutup Disertasi",
+        activities: [
+          "Penyusunan naskah disertasi",
+          "Konsultasi naskah disertasi",
+          "Revisi naskah disertasi",
+          "Diskusi dengan pembimbing",
+          "Penyusunan presentasi disertasi",
+          "Latihan presentasi disertasi",
+          "Konsultasi dengan ko-promotor",
+          "Revisi presentasi disertasi",
+          "Persiapan ujian tertutup",
+          "Ujian Disertasi Tertutup",
+        ],
+      },
+      {
+        mataKuliah: "Ujian Terbuka Disertasi",
+        activities: [
+          "Persiapan presentasi terbuka",
+          "Latihan presentasi disertasi",
+          "Konsultasi presentasi",
+          "Revisi presentasi terbuka",
+          "Diskusi dengan pembimbing",
+          "Penyusunan materi presentasi",
+          "Konsultasi dengan ko-promotor",
+          "Persiapan dokumen ujian",
+          "Latihan presentasi akhir",
+          "Ujian Disertasi Terbuka",
+        ],
+      },
+      {
+        mataKuliah: "Seminar Topik",
+        activities: [
+          "Literatur review",
+          "Systematic review",
+          "Meta analysis",
+          "Diskusi topik seminar",
+          "Penyusunan materi seminar",
+          "Konsultasi topik seminar",
+          "Revisi materi seminar",
+          "Latihan presentasi seminar",
+          "Konsultasi dengan pembimbing",
+          "Presentasi topik seminar",
+        ],
+      },
+    ];
 
-      for (const { mataKuliah, activities } of kegiatanData) {
-        const mataKuliahId = mataKuliahMap.get(mataKuliah);
-        if (mataKuliahId) {
-          for (const judul of activities) {
-            await prisma.kegiatan.create({
-              data: {
-                judul,
-                tanggalMulai: null,
-                tanggalSelesai: null,
-                status: "DIAJUKAN",
-                pengajuId: tambahPenggunaQuery.id, // ID dari pengguna (mahasiswa) yang baru dibuat
-                mata_kuliahId: mataKuliahId,
-              },
-            });
-          }
-        } else {
-          // Opsional: log warning jika ada mata kuliah yang tidak ditemukan
-          console.warn(
-            `Mata kuliah '${mataKuliah}' tidak ditemukan di database saat seeding kegiatan untuk pengguna baru.`
-          );
+    for (const { mataKuliah, activities } of kegiatanData) {
+      const mataKuliahId = mataKuliahMap.get(mataKuliah);
+      if (mataKuliahId) {
+        for (const judul of activities) {
+          await prisma.kegiatan.create({
+            data: {
+              judul,
+              tanggalMulai: null,
+              tanggalSelesai: null,
+              status: "DIAJUKAN",
+              pengajuId: tambahPenggunaQuery.id, // ID dari pengguna (mahasiswa) yang baru dibuat
+              mata_kuliahId: mataKuliahId,
+            },
+          });
         }
+      } else {
+        // Opsional: log warning jika ada mata kuliah yang tidak ditemukan
+        console.warn(
+          `Mata kuliah '${mataKuliah}' tidak ditemukan di database saat seeding kegiatan untuk pengguna baru.`
+        );
       }
     }
-    // END: Tambahkan kegiatan default jika pengguna adalah MAHASISWA
 
     log(tambahPenggunaQuery);
-
-    revalidatePath("/admin/pengguna");
 
     return {
       success: true,
