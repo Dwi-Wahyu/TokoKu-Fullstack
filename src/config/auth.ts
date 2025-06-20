@@ -46,7 +46,6 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as number;
         session.user.username = token.username as string;
         session.user.nama = token.nama as string;
         session.user.role = token.role as string;

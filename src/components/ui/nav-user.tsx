@@ -32,7 +32,7 @@ export function NavUser({
   user,
 }: {
   user: {
-    id: string;
+    id: number;
     nama: string;
     username: string;
     avatar: string;
