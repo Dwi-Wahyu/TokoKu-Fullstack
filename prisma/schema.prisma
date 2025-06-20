@@ -1,156 +1,133 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  output   = "./generated/prisma"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-model pengguna {
-  id        String         @id @default(uuid())
-  nama      String         @unique
-  username  String         @unique // nip untuk dosen, nim untuk mahasiswa
+model Discount {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String?
+  type        DiscountType
+  value       Decimal
+  isActive    Boolean      @default(true)
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime
+  Product     Product[]
+}
+
+model Expense {
+  id            Int             @id @default(autoincrement())
+  description   String
+  category      ExpenseCategory
+  amount        Decimal
+  expenseDate   DateTime        @default(now())
+  processedById Int
+  User          User            @relation(fields: [processedById], references: [id])
+  StockMovement StockMovement[]
+}
+
+model Order {
+  id             Int         @id @default(autoincrement())
+  status         OrderStatus @default(PENDING)
+  totalAmount    Decimal
+  discountAmount Decimal
+  finalAmount    Decimal
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime
+  processedById  Int
+  User           User        @relation(fields: [processedById], references: [id])
+  OrderItem      OrderItem[]
+}
+
+model OrderItem {
+  id              Int            @id @default(autoincrement())
+  quantity        Int
+  priceAtPurchase Decimal
+  costAtPurchase  Decimal
+  orderId         Int
+  productId       Int
+  Order           Order          @relation(fields: [orderId], references: [id])
+  Product         Product        @relation(fields: [productId], references: [id])
+  StockMovement   StockMovement?
+}
+
+model Product {
+  id            Int             @id @default(autoincrement())
+  sku           String          @unique
+  image         String?
+  name          String
+  category      String?
+  price         Decimal
+  cost          Decimal
+  stock         Int             @default(0)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime
+  OrderItem     OrderItem[]
+  StockMovement StockMovement[]
+  Discount      Discount[]
+}
+
+model StockMovement {
+  id             Int               @id @default(autoincrement())
+  type           StockMovementType
+  quantityChange Int
+  notes          String?
+  createdAt      DateTime          @default(now())
+  productId      Int
+  orderItemId    Int?              @unique
+  expenseId      Int?
+  Expense        Expense?          @relation(fields: [expenseId], references: [id])
+  OrderItem      OrderItem?        @relation(fields: [orderItemId], references: [id])
+  Product        Product           @relation(fields: [productId], references: [id])
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  username  String    @unique
   password  String
-  peran     pengguna_peran @default(MAHASISWA)
   avatar    String?
-  signature String?
-
-  profil profil?
-
-  bimbingan    pengguna[] @relation("MahasiswaBimbingan")
-  pembimbing   pengguna?  @relation("MahasiswaBimbingan", fields: [pembimbingId], references: [id])
-  pembimbingId String?
-
-  koPromotorMahasiswa pengguna[] @relation("KoPromotorMahasiswa")
-  koPromotor          pengguna?  @relation("KoPromotorMahasiswa", fields: [koPromotorId], references: [id])
-  koPromotorId        String?
-
-  promotorMahasiswa pengguna[] @relation("PromotorMahasiswa")
-  promotor          pengguna?  @relation("PromotorMahasiswa", fields: [promotorId], references: [id])
-  promotorId        String?
-
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  notifikasi notifikasi[]
-
-  kegiatan kegiatan[] @relation("KegiatanDiajukan")
-
-  logbook logbook?
-
-  permohonan_bimbingan_dibuat   permohonan_bimbingan[] @relation("PermohonanBimbinganDibuat")
-  permohonan_bimbingan_diterima permohonan_bimbingan[] @relation("PermohonanBimbinganDiterima")
+  role      Role      @default(CASHIER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime
+  Expense   Expense[]
+  Order     Order[]
 }
 
-model kegiatan {
-  id             Int       @id @default(autoincrement())
-  judul          String
-  lokasi         String?
-  tanggalMulai   DateTime?
-  tanggalSelesai DateTime?
-
-  catatan   String?
-  status    kegiatan_status     @default(DIAJUKAN)
-  createdAt DateTime            @default(now())
-  updatedAt DateTime            @updatedAt
-  lampiran  lampiran_kegiatan[]
-
-  pengaju   pengguna? @relation("KegiatanDiajukan", fields: [pengajuId], references: [id])
-  pengajuId String?
-
-  mata_kuliah   mata_kuliah? @relation(fields: [mata_kuliahId], references: [id])
-  mata_kuliahId Int?
+enum DiscountType {
+  PERCENTAGE
+  FIXED_AMOUNT
 }
 
-model logbook {
-  id         Int       @id @default(autoincrement())
-  path       String
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  pengguna   pengguna? @relation(fields: [penggunaId], references: [id])
-  penggunaId String?   @unique
+enum ExpenseCategory {
+  STOCK_PURCHASE
+  SALARY
+  OPERATIONAL
+  UTILITIES
 }
 
-model profil {
-  id Int @id @default(autoincrement())
-
-  judulDisertasi       String?
-  angkatan             String?
-  tempatTanggalLahir   String?
-  alamat               String?
-  alamatKeluarga       String?
-  tahunLulus           String?
-  mulaiMasukPendidikan DateTime?
-  pekerjaan            String?
-  nomorTelpon          String?
-  email                String?
-
-  // Relasi ke pengguna menggunakan ID
-  pengguna   pengguna @relation(fields: [penggunaId], references: [id])
-  penggunaId String   @unique
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
 }
 
-model permohonan_bimbingan {
-  id                Int               @id @default(autoincrement())
-  statusPermohonan  status_permohonan @default(TERKIRIM)
-  kalimatPermohonan String            @db.Text
-  alasanDitolak     String?
-  mahasiswa         pengguna?         @relation("PermohonanBimbinganDibuat", fields: [mahasiswaId], references: [id])
-  mahasiswaId       String?
-  dosen             pengguna?         @relation("PermohonanBimbinganDiterima", fields: [dosenId], references: [id])
-  dosenId           String?
-  createdAt         DateTime          @default(now())
-}
-
-model mata_kuliah {
-  id        Int        @id @default(autoincrement())
-  judul     String     @unique()
-  semester  Int
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  kegiatan  kegiatan[]
-}
-
-model lampiran_kegiatan {
-  id         Int       @id @default(autoincrement())
-  path       String
-  ext        String
-  kegiatan   kegiatan? @relation(fields: [kegiatanId], references: [id])
-  kegiatanId Int?
-}
-
-model notifikasi {
-  id         Int      @id @default(autoincrement())
-  judul      String
-  pesan      String   @db.Text
-  dibaca     Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  penggunaId String
-  pengguna   pengguna @relation(fields: [penggunaId], references: [id], map: "Notifikasi_penggunaId_fkey")
-
-  @@index([penggunaId], map: "Notifikasi_penggunaId_fkey")
-}
-
-enum peran_pembimbing {
-  PROMOTOR
-  KOPROMOTOR
-}
-
-enum status_permohonan {
-  TERKIRIM
-  DITOLAK
-  DISETUJUI
-}
-
-enum pengguna_peran {
+enum Role {
   ADMIN
-  MAHASISWA
-  DOSEN
+  CASHIER
 }
 
-enum kegiatan_status {
-  DIAJUKAN
-  DISETUJUI
-  DITOLAK
+enum StockMovementType {
+  PURCHASE
+  SALE
+  RETURN
+  ADJUSTMENT
 }

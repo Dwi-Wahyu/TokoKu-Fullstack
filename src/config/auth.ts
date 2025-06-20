@@ -3,7 +3,7 @@ import NextAuth, { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import { compareSync } from "bcryptjs";
-import { loginSchema } from "@/schema/LoginSchema";
+import { loginSchema } from "@/schema/login-schema";
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -20,7 +20,7 @@ export const authConfig: NextAuthConfig = {
 
         const { username, password } = parsed.data;
 
-        const user = await prisma.pengguna.findFirst({
+        const user = await prisma.user.findFirst({
           where: { username },
         });
 
@@ -31,9 +31,9 @@ export const authConfig: NextAuthConfig = {
           ? {
               id: user.id,
               username: user.username,
-              nama: user.nama,
+              nama: user.name,
               avatar: user.avatar,
-              peran: user.peran,
+              role: user.role,
             }
           : null;
       },
@@ -46,10 +46,10 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
+        session.user.id = token.id as number;
         session.user.username = token.username as string;
         session.user.nama = token.nama as string;
-        session.user.peran = token.peran as string;
+        session.user.role = token.role as string;
         session.user.avatar = token.avatar as string;
       }
       return session;
@@ -59,7 +59,7 @@ export const authConfig: NextAuthConfig = {
         token.id = user.id;
         token.username = user.username;
         token.nama = user.nama;
-        token.peran = user.peran;
+        token.role = user.role;
         token.avatar = user.avatar;
       }
       return token;

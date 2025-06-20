@@ -1,6 +1,6 @@
 import { auth } from "@/config/auth";
 import { redirect } from "next/navigation";
-import ClientAdminLayout from "../_components/AdminLayout";
+import ClientAdminLayout from "../_components/admin-layout";
 
 export default async function AdminLayout({
   children,

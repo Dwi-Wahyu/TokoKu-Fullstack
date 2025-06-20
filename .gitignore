@@ -10,17 +10,7 @@
 !.yarn/releases
 !.yarn/versions
 
-generated_logbook/*
-!generated_logbook/.gitkeep
-
-public/image/signature/*
-!public/image/signature/.gitkeep
-
-public/image/profile-picture/*
-!public/image/profile-picture/.gitkeep
-
-public/lampiran/*
-!public/lampiran/.gitkeep
+prisma/generated
 
 # testing
 /coverage
