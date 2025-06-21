@@ -8,6 +8,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SessionProvider } from "next-auth/react";
 
+import { PageTracker } from "react-page-tracker";
+
 export const metadata: Metadata = {
   title: {
     default: "TokoKu",
@@ -82,6 +84,8 @@ export default function RootLayout({
           zIndex={1600}
           showAtBottom={false}
         />
+
+        <PageTracker />
 
         <ThemeProvider
           attribute="class"

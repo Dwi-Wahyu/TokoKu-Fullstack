@@ -10,6 +10,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { getAllMedia } from "@/app/_lib/queries/media";
+import { AddMediaDialog } from "@/app/_components/add-media-dialog";
 
 export const dynamic = "force-dynamic";
 
@@ -20,11 +21,8 @@ export default async function MediaListPage() {
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Koleksi Media</h1>
-        <Button asChild>
-          <Link href="/admin/pengaturan/media/tambah-media">
-            <PlusCircle className="mr-2 h-4 w-4" /> Tambah Media Baru
-          </Link>
-        </Button>
+
+        <AddMediaDialog />
       </div>
 
       {mediaItems.length === 0 ? (

@@ -9,6 +9,107 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  category    String?
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relasi ke varian & opsi
+  variants ProductVariant[]
+  options  ProductOption[]
+  Discount Discount[]
+}
+
+model ProductVariant {
+  id        Int      @id @default(autoincrement())
+  sku       String   @unique
+  image     String?
+  price     Decimal
+  cost      Decimal
+  stock     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  productId Int
+  Product   Product @relation(fields: [productId], references: [id])
+
+  optionValues  ProductVariantOptionValue[]
+  OrderItem     OrderItem[]
+  StockMovement StockMovement[]
+}
+
+model ProductOption {
+  id        Int                  @id @default(autoincrement())
+  name      String // contoh: Ukuran, Warna
+  productId Int
+  Product   Product              @relation(fields: [productId], references: [id])
+  values    ProductOptionValue[]
+}
+
+model ProductOptionValue {
+  id            Int                         @id @default(autoincrement())
+  value         String // contoh: M, L, Hitam, Merah
+  optionId      Int
+  ProductOption ProductOption               @relation(fields: [optionId], references: [id])
+  variantValues ProductVariantOptionValue[]
+}
+
+model ProductVariantOptionValue {
+  id                 Int                @id @default(autoincrement())
+  variantId          Int
+  optionValueId      Int
+  ProductVariant     ProductVariant     @relation(fields: [variantId], references: [id])
+  ProductOptionValue ProductOptionValue @relation(fields: [optionValueId], references: [id])
+
+  @@unique([variantId, optionValueId])
+}
+
+model Order {
+  id             Int         @id @default(autoincrement())
+  status         OrderStatus @default(PENDING)
+  totalAmount    Decimal
+  discountAmount Decimal
+  finalAmount    Decimal
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime
+  processedById  Int
+  User           User        @relation(fields: [processedById], references: [id])
+  OrderItem      OrderItem[]
+}
+
+model OrderItem {
+  id              Int     @id @default(autoincrement())
+  quantity        Int
+  priceAtPurchase Decimal
+  costAtPurchase  Decimal
+
+  orderId        Int
+  variantId      Int
+  Order          Order          @relation(fields: [orderId], references: [id])
+  ProductVariant ProductVariant @relation(fields: [variantId], references: [id])
+  StockMovement  StockMovement?
+}
+
+model StockMovement {
+  id             Int               @id @default(autoincrement())
+  type           StockMovementType
+  quantityChange Int
+  notes          String?
+  createdAt      DateTime          @default(now())
+
+  variantId   Int
+  orderItemId Int? @unique
+  expenseId   Int?
+
+  Expense        Expense?       @relation(fields: [expenseId], references: [id])
+  OrderItem      OrderItem?     @relation(fields: [orderItemId], references: [id])
+  ProductVariant ProductVariant @relation(fields: [variantId], references: [id])
+}
+
 model Discount {
   id          Int          @id @default(autoincrement())
   name        String
@@ -34,47 +135,6 @@ model Expense {
   StockMovement StockMovement[]
 }
 
-model Order {
-  id             Int         @id @default(autoincrement())
-  status         OrderStatus @default(PENDING)
-  totalAmount    Decimal
-  discountAmount Decimal
-  finalAmount    Decimal
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime
-  processedById  Int
-  User           User        @relation(fields: [processedById], references: [id])
-  OrderItem      OrderItem[]
-}
-
-model OrderItem {
-  id              Int            @id @default(autoincrement())
-  quantity        Int
-  priceAtPurchase Decimal
-  costAtPurchase  Decimal
-  orderId         Int
-  productId       Int
-  Order           Order          @relation(fields: [orderId], references: [id])
-  Product         Product        @relation(fields: [productId], references: [id])
-  StockMovement   StockMovement?
-}
-
-model Product {
-  id            Int             @id @default(autoincrement())
-  sku           String          @unique
-  image         String?
-  name          String
-  category      String?
-  price         Decimal
-  cost          Decimal
-  stock         Int             @default(0)
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime
-  OrderItem     OrderItem[]
-  StockMovement StockMovement[]
-  Discount      Discount[]
-}
-
 model Media {
   id        Int      @id @default(autoincrement())
   url       String   @unique
@@ -84,20 +144,6 @@ model Media {
   altText   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-model StockMovement {
-  id             Int               @id @default(autoincrement())
-  type           StockMovementType
-  quantityChange Int
-  notes          String?
-  createdAt      DateTime          @default(now())
-  productId      Int
-  orderItemId    Int?              @unique
-  expenseId      Int?
-  Expense        Expense?          @relation(fields: [expenseId], references: [id])
-  OrderItem      OrderItem?        @relation(fields: [orderItemId], references: [id])
-  Product        Product           @relation(fields: [productId], references: [id])
 }
 
 model User {

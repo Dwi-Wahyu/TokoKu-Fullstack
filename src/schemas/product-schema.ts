@@ -1,37 +1,33 @@
-// schemas/product.ts
 import { z } from "zod";
 
-export const productSchema = z.object({
-  sku: z
-    .string()
-    .min(1, { message: "SKU is required." })
-    .max(50, { message: "SKU must not exceed 50 characters." }),
-  image: z
-    .string()
-    .url({ message: "Invalid URL for image." })
-    .optional()
-    .or(z.literal("")),
-  name: z
-    .string()
-    .min(1, { message: "Product name is required." })
-    .max(100, { message: "Product name must not exceed 100 characters." }),
-  category: z.string().optional().or(z.literal("")),
-  // Gunakan z.coerce.number() untuk secara otomatis mengonversi string ke number
-  price: z.coerce
-    .number()
-    .min(0.01, { message: "Price must be greater than 0." })
-    .max(999999999, { message: "Price is too high." })
-    .transform((val) => parseFloat(val.toFixed(2))), // Opsional: Pastikan 2 angka di belakang koma
-  cost: z.coerce
-    .number()
-    .min(0, { message: "Cost cannot be negative." })
-    .max(999999999, { message: "Cost is too high." })
-    .transform((val) => parseFloat(val.toFixed(2))), // Opsional: Pastikan 2 angka di belakang koma
-  stock: z.coerce
-    .number()
-    .int({ message: "Stock must be a whole number." }) // Pastikan integer
-    .min(0, { message: "Stock cannot be negative." })
-    .max(999999, { message: "Stock is too high." }),
-});
+export const productSchema = z
+  .object({
+    sku: z.string().min(1, { message: "SKU harus diisi." }),
+    image: z.string().optional().or(z.literal("")),
+    name: z.string().min(1, { message: "Nama produk harus diisi." }),
+    category: z.string().optional().or(z.literal("")),
+    description: z.string().optional().or(z.literal("")),
+    price: z.coerce
+      .number()
+      .min(0.01, { message: "Harga harus lebih dari 0." }),
+    isSingleVariant: z.boolean({
+      required_error: "Harap tentukan tipe varian produk.",
+    }),
+    cost: z.coerce.number().min(0, { message: "Biaya tidak boleh negatif." }),
+    stock: z.coerce
+      .number()
+      .int()
+      .min(0, { message: "Stok tidak boleh negatif." }),
+  })
+  .refine(
+    (data) => {
+      if (!data.isSingleVariant) return true;
+      return data.sku && data.price !== undefined && data.stock !== undefined;
+    },
+    {
+      message: "SKU, harga, dan stok wajib diisi untuk produk satu varian.",
+      path: ["sku"],
+    }
+  );
 
 export type ProductFormValues = z.infer<typeof productSchema>;
