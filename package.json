@@ -9,9 +9,6 @@
     "lint": "next lint",
     "postinstall": "prisma generate"
   },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
-  },
   "overrides": {
     "react-is": "^19.0.0-rc-69d4b800-20241021"
   },
@@ -42,6 +39,7 @@
     "@radix-ui/react-tooltip": "^1.2.4",
     "@tanstack/react-table": "^8.21.3",
     "@tanstack/react-virtual": "^3.13.6",
+    "@vercel/blob": "^1.1.1",
     "axios": "^1.8.4",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
@@ -65,6 +63,7 @@
     "react": "^19.1.0",
     "react-day-picker": "^9.7.0",
     "react-dom": "^19.1.0",
+    "react-dropzone": "^14.3.8",
     "react-hook-form": "^7.56.1",
     "recharts": "^2.15.3",
     "sonner": "^2.0.3",

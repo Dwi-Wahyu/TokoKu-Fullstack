@@ -67,12 +67,13 @@ export function AdminSidebar({
       <SidebarHeader>
         <div className="flex items-center justify-center mt-2 gap-2">
           <Image
-            src="/logo-unhas.png"
+            src="/logo-tokoku.png"
             alt="Logo Unhas"
             width={30}
             height={30}
           />
-          <h1 className="font-bold text-lg">LOGBOOK FKG</h1>
+          <h1 className="font-bold text-lg">TokoKu</h1>
+          <h1>{session.user.role}</h1>
         </div>
       </SidebarHeader>
       <SidebarContent>

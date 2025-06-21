@@ -75,6 +75,17 @@ model Product {
   Discount      Discount[]
 }
 
+model Media {
+  id        Int      @id @default(autoincrement())
+  url       String   @unique
+  filename  String
+  mimetype  String?
+  size      Int?
+  altText   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 model StockMovement {
   id             Int               @id @default(autoincrement())
   type           StockMovementType

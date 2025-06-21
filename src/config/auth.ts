@@ -3,7 +3,7 @@ import NextAuth, { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import { compareSync } from "bcryptjs";
-import { loginSchema } from "@/schema/login-schema";
+import { loginSchema } from "@/schemas/login-schema";
 
 export const authConfig: NextAuthConfig = {
   providers: [
