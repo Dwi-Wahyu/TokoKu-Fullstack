@@ -6,14 +6,14 @@ export const dummyDataProduk = [
     name: "Kaos Polo T-Shirt",
     description: "Kaos polo dengan bahan katun premium",
     category: "Pakaian",
-    image: "https://example.com/images/polo-tshirt.jpg",
+    image: "/products/polo.png",
     createdAt: "2023-01-15T10:30:00Z",
     updatedAt: "2023-01-20T08:45:00Z",
     variants: [
       {
         id: 1,
         sku: "POLO-S-M",
-        image: "https://example.com/images/polo-tshirt-black.jpg",
+        image: "/products/polo.png",
         price: 199000.0,
         cost: 120000.0,
         stock: 50,
@@ -85,14 +85,14 @@ export const dummyDataProduk = [
     name: "Celana Jeans Slim Fit",
     description: "Celana jeans dengan potongan slim fit",
     category: "Pakaian",
-    image: "https://example.com/images/jeans-slim.jpg",
+    image: "/products/jeans.png",
     createdAt: "2023-02-10T14:20:00Z",
     updatedAt: "2023-02-15T09:10:00Z",
     variants: [
       {
         id: 3,
         sku: "JEANS-30-B",
-        image: "https://example.com/images/jeans-blue.jpg",
+        image: "/products/jeans.png",
         price: 450000.0,
         cost: 300000.0,
         stock: 25,

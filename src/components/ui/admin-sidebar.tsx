@@ -52,15 +52,23 @@ export function AdminSidebar({
     return query ? `${fullPath}?${query}` : fullPath;
   }
 
-  if (!session?.user) {
-    return (
-      <Sidebar {...props}>
-        <SidebarSkeleton />
-      </Sidebar>
-    );
-  }
+  // if (!session?.user) {
+  //   return (
+  //     <Sidebar {...props}>
+  //       <SidebarSkeleton />
+  //     </Sidebar>
+  //   );
+  // }
 
-  const menuData = getSidebarMenu(session.user.role);
+  const userHardCode = {
+    id: 1,
+    nama: "Adit Bahri",
+    username: "H061241060",
+    avatar: "",
+  };
+
+  // const menuData = getSidebarMenu(session.user.role);
+  const menuData = getSidebarMenu("ADMIN");
 
   return (
     <Sidebar {...props}>
@@ -73,7 +81,6 @@ export function AdminSidebar({
             height={30}
           />
           <h1 className="font-bold text-lg">TokoKu</h1>
-          <h1>{session.user.role}</h1>
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -169,7 +176,7 @@ export function AdminSidebar({
       </SidebarContent>
 
       <SidebarFooter>
-        <NavUser user={session.user} />
+        <NavUser user={userHardCode} />
       </SidebarFooter>
     </Sidebar>
   );
