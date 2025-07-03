@@ -26,35 +26,47 @@ export async function addProduct(
     isSingleVariant,
   } = data;
 
-  if (isSingleVariant) {
-    const product = await prisma.product.create({
-      data: {
-        name,
-        category: category || null,
-        description: description || null,
-        image: image || null, // simpan di produk juga
-        variants: {
-          create: {
-            sku: sku ?? "",
-            price: price ?? 0,
-            cost: cost ?? 0,
-            stock: stock ?? 0,
-            image: image || null,
-          },
-        },
-      },
-    });
+  // if (isSingleVariant) {
+  //   const product = await prisma.product.create({
+  //     data: {
+  //       name,
+  //       category: category || null,
+  //       description: description || null,
+  //       image: image || null, // simpan di produk juga
+  //       variants: {
+  //         create: {
+  //           sku: sku ?? "",
+  //           price: price ?? 0,
+  //           cost: cost ?? 0,
+  //           stock: stock ?? 0,
+  //           gambar: image || null,
+  //         },
+  //       },
+  //     },
+  //   });
 
-    return {
-      success: true,
-      message: "Produk berhasil ditambahkan.",
-      data: product,
-    };
-  }
+  //   return {
+  //     success: true,
+  //     message: "Produk berhasil ditambahkan.",
+  //     data: product,
+  //   };
+  // }
 
   // ⏳ Placeholder untuk produk multi-variant
   return {
     success: false,
     message: "Produk multi-varian belum didukung.",
   };
+}
+
+export async function getAllProducts() {
+  return await prisma.product.findMany({
+    include: {
+      media: {
+        select: {
+          url: true,
+        },
+      },
+    },
+  });
 }

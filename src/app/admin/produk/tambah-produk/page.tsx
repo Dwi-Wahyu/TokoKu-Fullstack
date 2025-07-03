@@ -173,16 +173,14 @@ export default function TambahProdukPage() {
                 )}
               />
 
-              {isSingleVariant && (
-                <div className="w-full">
-                  <h1>Gambar (Opsional)</h1>
+              <div className="w-full">
+                <h1>Gambar (Opsional)</h1>
 
-                  <FileUploadComponent
-                    multiple={false}
-                    onFilesChange={(files) => setFiles(files)}
-                  />
-                </div>
-              )}
+                <FileUploadComponent
+                  multiple={false}
+                  onFilesChange={(files) => setFiles(files)}
+                />
+              </div>
 
               {isSingleVariant && (
                 <>

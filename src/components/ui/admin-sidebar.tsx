@@ -52,23 +52,15 @@ export function AdminSidebar({
     return query ? `${fullPath}?${query}` : fullPath;
   }
 
-  // if (!session?.user) {
-  //   return (
-  //     <Sidebar {...props}>
-  //       <SidebarSkeleton />
-  //     </Sidebar>
-  //   );
-  // }
+  if (!session?.user) {
+    return (
+      <Sidebar {...props}>
+        <SidebarSkeleton />
+      </Sidebar>
+    );
+  }
 
-  const userHardCode = {
-    id: 1,
-    nama: "Adit Bahri",
-    username: "H061241060",
-    avatar: "",
-  };
-
-  // const menuData = getSidebarMenu(session.user.role);
-  const menuData = getSidebarMenu("ADMIN");
+  const menuData = getSidebarMenu(session.user.role);
 
   return (
     <Sidebar {...props}>
@@ -176,7 +168,7 @@ export function AdminSidebar({
       </SidebarContent>
 
       <SidebarFooter>
-        <NavUser user={userHardCode} />
+        <NavUser user={session.user} />
       </SidebarFooter>
     </Sidebar>
   );

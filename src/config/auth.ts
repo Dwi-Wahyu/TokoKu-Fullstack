@@ -4,6 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import { compareSync } from "bcryptjs";
 import { loginSchema } from "@/schemas/login-schema";
+import { Role } from "@/lib/enums/role";
 
 export const authConfig: NextAuthConfig = {
   providers: [
@@ -24,8 +25,11 @@ export const authConfig: NextAuthConfig = {
           where: { username },
         });
 
+        console.log(user);
+
         if (!user) return null;
 
+        // Gunakan bcrypt
         const isValid = compareSync(password, user.password);
         return isValid
           ? {
@@ -33,7 +37,7 @@ export const authConfig: NextAuthConfig = {
               username: user.username,
               nama: user.name,
               avatar: user.avatar,
-              role: user.role,
+              role: Role[user.role],
             }
           : null;
       },

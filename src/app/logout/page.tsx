@@ -13,7 +13,7 @@ export default function LogoutPage() {
         redirect: false,
         redirectTo: "/",
       });
-      router.push("/");
+      router.push("/login");
     };
 
     handleLogout();

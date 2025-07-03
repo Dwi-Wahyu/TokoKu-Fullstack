@@ -5,20 +5,43 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { loginSchema, TLoginSchema } from "@/schemas/login-schema";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+
+import { useRouter } from "nextjs-toploader/app";
 
 export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
     mode: "onChange",
   });
 
-  const processLogin = (data: TLoginSchema) => {
-    console.log("Validasi berhasil! Data form:", data);
-    alert(`Login dengan Username: ${data.username}`);
+  const router = useRouter();
+
+  const processLogin = async (values: TLoginSchema) => {
+    const res = await signIn("credentials", {
+      username: values.username,
+      password: values.password,
+      redirect: false, // <- ini penting supaya gak refresh halaman
+    });
+
+    if (res?.error) {
+      setError("username", {
+        type: "manual",
+        message: "Username atau Password salah",
+      });
+      setError("password", {
+        type: "manual",
+        message: "Username atau Password salah",
+      });
+    } else {
+      router.push("/admin/dashboard");
+    }
   };
 
   return (
